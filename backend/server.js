@@ -3,8 +3,11 @@ import products from "../backend/data/products.js";
 const app = express();
 const PORT = process.env.PORT || 5000;
 import dotenv from "dotenv";
+import connectToDB from "./config/db.js";
 
 dotenv.config();
+
+connectToDB();
 
 app.get("/", (req, res) => {
 	res.send("api is running");
