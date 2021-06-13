@@ -1,0 +1,34 @@
+import productTypes from "./types";
+
+const initialState = {
+	product: {
+		loading: false,
+		reviews: []
+	}
+};
+
+const productDetailsReducer = (state = initialState, action) => {
+	switch (action.type) {
+		case productTypes.GET_PRODUCT_DETAILS:
+			return {
+				...state,
+				loading: true
+			};
+		case productTypes.GET_PRODUCT_DETAILS_SUCCESS:
+			return {
+				...state,
+				loading: false,
+				product: action.payload
+			};
+		case productTypes.GET_PRODUCT_DETAILS_FAIL:
+			return {
+				...state,
+				loading: false,
+				error: action.payload
+			};
+		default:
+			return state;
+	}
+};
+
+export default productDetailsReducer;

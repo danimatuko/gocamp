@@ -22,3 +22,25 @@ export const getAllProducts = () => {
 		}
 	};
 };
+
+export const getProductDetails = (id) => {
+	return async (dispatch) => {
+		try {
+			dispatch({
+				type: productTypes.GET_PRODUCT_DETAILS
+			});
+
+			const { data } = await Axios.get(`/api/products/${id}`);
+
+			dispatch({
+				type: productTypes.GET_PRODUCT_DETAILS_SUCCESS,
+				payload: data
+			});
+		} catch (error) {
+			dispatch({
+				type: productTypes.GET_PRODUCT_DETAILS_FAIL,
+				payload: error.response.data.message || error.message
+			});
+		}
+	};
+};
