@@ -5,6 +5,7 @@ import Header from "./components/Header";
 import HomePage from "./pages/HomePage";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import ProductPage from "./pages/ProductPage";
+import CartPage from "./pages/CartPage";
 
 const App = () => {
 	return (
@@ -15,6 +16,7 @@ const App = () => {
 					<Container>
 						<Route path="/" exact component={HomePage} />
 						<Route path="/product/:id" exact component={ProductPage} />
+						<Route path={`/cart/:id?`} component={CartPage} />
 					</Container>
 				</main>
 				<Footer />
