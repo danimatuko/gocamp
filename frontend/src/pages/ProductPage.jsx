@@ -6,18 +6,24 @@ import Rating from "../components/Rating";
 import { getProductDetails } from "../redux/product/actions";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
+import { addToCart } from "../redux/cart/cartActions";
 
 const ProductPage = ({ match, history }) => {
 	const { product, loading, error } = useSelector((state) => state.productDetails);
 	const dispatch = useDispatch();
+	const productId = product._id;
+	// local state for the quntitiy
 	const [qty, setQty] = useState(0);
 
 	useEffect(() => {
 		dispatch(getProductDetails(match.params.id));
-	}, [match]);
+	}, [match, dispatch]);
 
-	const addToCart = () => {
-		history.push(`/cart/${match.params.id}/qty?=${qty}`);
+	const handleAddToCart = () => {
+		console.log("handleAddToCart");
+		dispatch(addToCart(productId, Number(qty)));
+		//history.push(`/cart/${match.params.id}/?qty=${qty}`);
+		history.push("/");
 	};
 
 	return (
@@ -73,8 +79,8 @@ const ProductPage = ({ match, history }) => {
 								<Button
 									className="w-100"
 									type="button"
-									disabled={product.countInStock == 0 || qty == 0}
-									onClick={(e) => addToCart()}>
+									disabled={product.countInStock === 0 || qty === 0}
+									onClick={(e) => handleAddToCart()}>
 									Add to cart
 								</Button>
 							</ListGroupItem>
