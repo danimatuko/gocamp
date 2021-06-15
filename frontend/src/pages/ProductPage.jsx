@@ -20,7 +20,6 @@ const ProductPage = ({ match, history }) => {
 	}, [match, dispatch]);
 
 	const handleAddToCart = () => {
-		console.log("handleAddToCart");
 		dispatch(addToCart(productId, Number(qty)));
 		//history.push(`/cart/${match.params.id}/?qty=${qty}`);
 		history.push("/");
@@ -63,6 +62,7 @@ const ProductPage = ({ match, history }) => {
 										</Col>
 										<Col sm={4}>
 											<Form.Control
+												placeholder="0"
 												size="sm"
 												type="number"
 												min="0"
