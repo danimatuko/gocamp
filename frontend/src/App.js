@@ -6,6 +6,7 @@ import HomePage from "./pages/HomePage";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import ProductPage from "./pages/ProductPage";
 import CartPage from "./pages/CartPage";
+import LoginPage from "./pages/LoginPage";
 
 const App = () => {
 	return (
@@ -17,6 +18,7 @@ const App = () => {
 						<Route path="/" exact component={HomePage} />
 						<Route path="/product/:id" exact component={ProductPage} />
 						<Route path={`/cart/:id?`} component={CartPage} />
+						<Route path={`/login`} component={LoginPage} />
 					</Container>
 				</main>
 				<Footer />
