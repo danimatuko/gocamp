@@ -1,5 +1,5 @@
 import Axios from "axios";
-import { LOGIN, LOGIN_FAIL, LOGIN_SUCCESS } from "./userTypes";
+import { LOGIN, LOGIN_FAIL, LOGIN_SUCCESS, LOGOUT } from "./userTypes";
 
 export const login = (email, password) => async (dispatch) => {
 	try {
@@ -27,4 +27,12 @@ export const login = (email, password) => async (dispatch) => {
 			payload: error.response.data.message || error.message
 		});
 	}
+};
+
+export const logout = () => (dispatch) => {
+	localStorage.removeItem("userInfo");
+	dispatch({
+		type: LOGOUT
+	});
+	document.location.href = "/login";
 };

@@ -29,7 +29,10 @@ const userReducer = (state = initialState, { type, payload }) => {
 				error: payload
 			};
 		case LOGOUT:
-			return {};
+			return {
+				...state,
+				userInfo: null
+			};
 		default:
 			return state;
 	}
