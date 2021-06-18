@@ -5,6 +5,10 @@ import generateToken from "../utils/generateToken.js";
 
 const register = asyncHandler(async (req, res) => {
 	const { first_name, last_name, email, password } = req.body;
+	if (first_name === "" || last_name === "" || email === "" || password === "") {
+		res.status(400);
+		throw new Error("All fields are required.");
+	}
 	const userExists = await User.findOne({ email });
 	if (userExists) {
 		res.status(400);
@@ -21,14 +25,19 @@ const register = asyncHandler(async (req, res) => {
 			password: encryptedPassword
 		});
 
-		res.status(201).json({
-			_id: user._id,
-			first_name: user.first_name,
-			last_name: user.last_name,
-			email: user.email,
-			isAdmin: user.isAdmin,
-			token: generateToken(user._id)
-		});
+		if (user) {
+			res.status(201).json({
+				_id: user._id,
+				first_name: user.first_name,
+				last_name: user.last_name,
+				email: user.email,
+				isAdmin: user.isAdmin,
+				token: generateToken(user._id)
+			});
+		} else {
+			res.status(400);
+			throw new Error("Invalid user data");
+		}
 	}
 });
 
