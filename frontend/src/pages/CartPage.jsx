@@ -1,13 +1,17 @@
-import React, { useEffect, useState } from "react";
-import { Button, Card, Col, Form, Image, ListGroup, ListGroupItem, Row } from "react-bootstrap";
+import React from "react";
+import { Button, Card, Col, Image, ListGroup, ListGroupItem, Row } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import Message from "../components/Message";
 import { addToCart, removeOne, removeItem } from "../redux/cart/cartActions";
 
-const CartPage = () => {
+const CartPage = ({ history }) => {
 	const { cartItems } = useSelector((state) => state.cart);
 	const dispatch = useDispatch();
+
+	const checkoutHandler = () => {
+		history.push("/login?redirect=shipping");
+	};
 
 	return (
 		<Row>
@@ -30,7 +34,8 @@ const CartPage = () => {
 										<Button
 											disabled={item.qty === Number(item.countInStock)}
 											variant="light"
-											onClick={(e) => dispatch(addToCart(item._id, 1))}>
+											onClick={(e) => dispatch(addToCart(item._id, 1))}
+										>
 											<i className="fas fa-chevron-up"></i>
 										</Button>
 										<div className="text-center">
@@ -40,7 +45,8 @@ const CartPage = () => {
 										<Button
 											disabled={item.qty === 1}
 											variant="light"
-											onClick={(e) => dispatch(removeOne(item._id))}>
+											onClick={(e) => dispatch(removeOne(item._id))}
+										>
 											<i className="fas fa-chevron-down"></i>
 										</Button>
 									</Row>
@@ -49,7 +55,8 @@ const CartPage = () => {
 									<Button
 										type="button"
 										variant="light"
-										onClick={() => dispatch(removeItem(item._id))}>
+										onClick={() => dispatch(removeItem(item._id))}
+									>
 										<i className="fas fa-trash"></i>
 									</Button>
 								</Col>
@@ -80,7 +87,9 @@ const CartPage = () => {
 								type="button"
 								variant="dark"
 								className="w-100"
-								disabled={!cartItems.length}>
+								disabled={!cartItems.length}
+								onClick={checkoutHandler}
+							>
 								Procced to checkout
 							</Button>
 						</ListGroupItem>

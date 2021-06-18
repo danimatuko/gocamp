@@ -1,9 +1,17 @@
-import { CART_ADD_ITEM, CART_REMOVE_ITEM, CART_REMOVE_ONE_QTY } from "./types";
+import {
+	CART_ADD_ITEM,
+	CART_REMOVE_ITEM,
+	CART_REMOVE_ONE_QTY,
+	CART_SAVE_SHIPPING_ADDRESS
+} from "./types";
 
 const initialState = {
 	cartItems: localStorage.getItem("cartItems")
 		? JSON.parse(localStorage.getItem("cartItems"))
-		: []
+		: [],
+	shippingAddress: localStorage.getItem("shippingAddress")
+		? JSON.parse(localStorage.getItem("shippingAddress"))
+		: ""
 };
 
 const cartReducer = (state = initialState, { type, payload }) => {
@@ -25,7 +33,6 @@ const cartReducer = (state = initialState, { type, payload }) => {
 				};
 			}
 		}
-
 		case CART_REMOVE_ONE_QTY: {
 			const id = payload;
 			const itemExist = state.cartItems.find((item) => item._id === id);
@@ -43,12 +50,20 @@ const cartReducer = (state = initialState, { type, payload }) => {
 			}
 		}
 
+		case CART_SAVE_SHIPPING_ADDRESS: {
+			return {
+				...state,
+				shippingAddress: payload
+			};
+		}
+
 		case CART_REMOVE_ITEM: {
 			return {
 				...state,
 				cartItems: state.cartItems.filter((item) => item._id !== payload)
 			};
 		}
+
 		default:
 			return state;
 	}
