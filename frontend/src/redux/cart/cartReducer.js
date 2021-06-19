@@ -2,6 +2,7 @@ import {
 	CART_ADD_ITEM,
 	CART_REMOVE_ITEM,
 	CART_REMOVE_ONE_QTY,
+	CART_SAVE_PAYMENT_METHOD,
 	CART_SAVE_SHIPPING_ADDRESS
 } from "./types";
 
@@ -11,6 +12,9 @@ const initialState = {
 		: [],
 	shippingAddress: localStorage.getItem("shippingAddress")
 		? JSON.parse(localStorage.getItem("shippingAddress"))
+		: "",
+	paymentMethod: localStorage.getItem("paymentMethod")
+		? JSON.parse(localStorage.getItem("paymentMethod"))
 		: ""
 };
 
@@ -54,6 +58,11 @@ const cartReducer = (state = initialState, { type, payload }) => {
 			return {
 				...state,
 				shippingAddress: payload
+			};
+		case CART_SAVE_PAYMENT_METHOD:
+			return {
+				...state,
+				paymentMethod: payload
 			};
 
 		case CART_REMOVE_ITEM: {

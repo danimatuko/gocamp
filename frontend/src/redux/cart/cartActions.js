@@ -3,6 +3,7 @@ import {
 	CART_ADD_ITEM,
 	CART_REMOVE_ITEM,
 	CART_REMOVE_ONE_QTY,
+	CART_SAVE_PAYMENT_METHOD,
 	CART_SAVE_SHIPPING_ADDRESS
 } from "./types";
 
@@ -47,4 +48,12 @@ export const saveShippingAddress = (address) => (dispatch, getState) => {
 		payload: address
 	});
 	localStorage.setItem("shippingAddress", JSON.stringify(address));
+};
+
+export const savePaymentMethod = (paymentMethod) => (dispatch, getState) => {
+	dispatch({
+		type: CART_SAVE_PAYMENT_METHOD,
+		payload: paymentMethod
+	});
+	localStorage.setItem("paymentMethod", JSON.stringify(paymentMethod));
 };
