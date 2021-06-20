@@ -53,7 +53,6 @@ const cartReducer = (state = initialState, { type, payload }) => {
 				};
 			}
 		}
-
 		case CART_SAVE_SHIPPING_ADDRESS:
 			return {
 				...state,

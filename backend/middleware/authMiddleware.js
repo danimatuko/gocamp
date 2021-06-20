@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import User from "../models/User.js";
 const auth = (req, res, next) => {
-	const token = req.header("authorization");
+	const token = req.header("Authorization");
 	if (!token) return res.status(401).send("No token provided");
 
 	try {
@@ -10,7 +10,8 @@ const auth = (req, res, next) => {
 		req.user = decodedToken;
 		next();
 	} catch (e) {
-		return res.status(400).send("Invalid token");
+		res.status(400);
+		throw new Error("Invalid token");
 	}
 };
 

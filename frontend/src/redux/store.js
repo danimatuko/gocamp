@@ -5,12 +5,14 @@ import productListReducer from "./product/productReducers";
 import productDetailsReducer from "./product/productDetailsReducer";
 import cartReducer from "./cart/cartReducer";
 import userReducer from "./user/userReducer";
+import orderReducer from "./order/orderReducer";
 
 const rootReducer = combineReducers({
 	productList: productListReducer,
 	productDetails: productDetailsReducer,
 	cart: cartReducer,
-	user: userReducer
+	user: userReducer,
+	order:orderReducer
 });
 
 const middleware = [thunk];

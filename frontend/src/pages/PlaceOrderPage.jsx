@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Image, ListGroup, Row, Col, Button } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import CheckoutSteps from "../components/CheckoutSteps";
 import Message from "../components/Message";
+import { createOrder } from "../redux/order/orederActions";
 
-const PlaceOrderPage = () => {
+const PlaceOrderPage = ({ history }) => {
 	const cart = useSelector((state) => state.cart);
 	const { shippingAddress, cartItems } = cart;
 	const dispatch = useDispatch();
@@ -25,8 +26,25 @@ const PlaceOrderPage = () => {
 		Number(cart.itemsPrice) + Number(cart.shippingPrice) + Number(cart.taxPrice)
 	).toFixed(2);
 
-    
-	const placeOrderHandler = () => {};
+	const { orderDetails, error, loading } = useSelector((state) => state.order);
+
+	useEffect(() => {
+		if (orderDetails) history.push(`/order/${orderDetails._id}`);
+	}, [history, orderDetails]);
+
+	const placeOrderHandler = () => {
+		dispatch(
+			createOrder({
+				orderItems: cart.cartItems,
+				shippingAddress: cart.shippingAddress,
+				paymentMethod: cart.paymentMethod,
+				itemsPrice: cart.itemsPrice,
+				shippingPrice: cart.shippingPrice,
+				taxPrice: cart.taxPrice,
+				totalPrice: cart.totalPrice
+			})
+		);
+	};
 
 	return (
 		<>
@@ -66,8 +84,8 @@ const PlaceOrderPage = () => {
 													</Link>
 												</Col>
 												<Col md={4}>
-													{item.qty} x ${item.price} = $
-													{item.qty * item.price}
+													{item.qty} x ${item.price} =
+													{Number(item.qty * item.price).toFixed(2)}
 												</Col>
 											</Row>
 										</ListGroup.Item>
@@ -107,6 +125,9 @@ const PlaceOrderPage = () => {
 							</Row>
 						</ListGroup.Item>
 						<ListGroup.Item>
+							<ListGroup.Item>
+								{error && <Message variant="danger" text={error} />}
+							</ListGroup.Item>
 							<Button
 								type="button"
 								className="w-100"

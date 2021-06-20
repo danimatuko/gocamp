@@ -8,6 +8,7 @@ import {
 } from "./types";
 
 export const addToCart = (id, qty) => (dispatch, getState) => {
+	// make sure the product exist on the DB
 	Axios.get(`/api/products/${id}`)
 		.then(({ data }) => {
 			dispatch({
