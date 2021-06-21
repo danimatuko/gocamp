@@ -1,5 +1,6 @@
 import Order from "../models/Order.js";
 import asyncHandler from "express-async-handler";
+import User from "../models/User.js";
 
 const addOrderItems = asyncHandler(async (req, res) => {
 	const { orderItems, shippingAddress, paymentMethod, itemsPrice, shippingPrice, totalPrice } =
@@ -10,7 +11,7 @@ const addOrderItems = asyncHandler(async (req, res) => {
 		throw new Error("No order Items");
 	} else {
 		const order = new Order({
-			user_id: req.user.id,
+			user: req.user.id,
 			orderItems,
 			shippingAddress,
 			paymentMethod,
@@ -27,10 +28,9 @@ const addOrderItems = asyncHandler(async (req, res) => {
 
 const getOrderById = asyncHandler(async (req, res) => {
 	const order = await Order.findById(req.params.id).populate(
-		"User",
-		"fist_name",
-		"last_name",
-		"email"
+		"user",
+		"fist_name last_name	email",
+		User
 	);
 
 	if (order) {
@@ -41,4 +41,24 @@ const getOrderById = asyncHandler(async (req, res) => {
 	}
 });
 
-export { addOrderItems,getOrderById };
+const updateOrderToPaid = asyncHandler(async (req, res) => {
+	const order = await Order.findById(req.params.id);
+	if (order) {
+		order.isPaid = true;
+		order.paidAt = Date.now();
+		order.paymentMethod = {
+			id: req.body.id,
+			status: req.body.status,
+			update_time: req.body.update_time,
+			email_address: req.body.payer.email_address
+		};
+		const updateOrder = await order.save();
+
+		res.json(updateOrder);
+	} else {
+		res.status(404);
+		throw new Error("Order payment issue");
+	}
+});
+
+export { addOrderItems, getOrderById, updateOrderToPaid };

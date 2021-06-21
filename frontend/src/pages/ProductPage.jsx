@@ -22,7 +22,7 @@ const ProductPage = ({ match, history }) => {
 	const handleAddToCart = () => {
 		dispatch(addToCart(productId, Number(qty)));
 		//history.push(`/cart/${match.params.id}/?qty=${qty}`);
-		history.push("/");
+		history.push("/cart");
 	};
 
 	return (

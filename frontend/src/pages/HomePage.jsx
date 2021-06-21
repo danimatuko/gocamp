@@ -15,7 +15,7 @@ const HomePage = () => {
 	}, [dispatch]);
 
 	return (
-		<>
+		<div>
 			<h1>Lateset products</h1>
 			{loading ? (
 				<Loader />
@@ -30,7 +30,7 @@ const HomePage = () => {
 					))}
 				</Row>
 			)}
-		</>
+		</div>
 	);
 };
 
