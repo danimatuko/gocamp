@@ -5,10 +5,10 @@ import { Link } from "react-router-dom";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
 import { getOrderDetails, payOrder } from "../redux/order/orederActions";
-import Axios from "axios";
-import { PayaplButton } from "react-paypal-button-v2";
 import { ORDER_PAY_RESET } from "../redux/order/types";
+import { PayPalButton } from "react-paypal-button-v2";
 
+import Paypal from "../components/Paypal";
 const OrderPage = ({ match }) => {
 	const orderId = match.params.id;
 	const dispatch = useDispatch();
@@ -17,39 +17,14 @@ const OrderPage = ({ match }) => {
 	const userInfo = useSelector((state) => state.user.userInfo);
 	const { shippingAddress } = orderDetails;
 
-	const [sdkReady, setSDKready] = useState(false);
-
 	useEffect(() => {
-		const addPaypalScript = async () => {
-			const { data: clientId } = await Axios.get("/api/config/paypal");
-			const script = document.createElement("script");
-			script.type = "text/javscript";
-			script.src = `https://www.paypal.com/sdk/js?client-id=${clientId}`;
-			script.async = true;
-			script.onload = () => {
-				setSDKready(true);
-			};
-			document.body.appendChild(script);
-		};
-
-		if (orderDetails.isPaid) {
-			dispatch({ type: ORDER_PAY_RESET });
-			dispatch(getOrderDetails(orderId));
-		} else {
-			if (!window.paypal) {
-				addPaypalScript();
-			} else {
-				setSDKready(true);
-			}
-		}
-
 		if (!orderDetails || orderDetails._id !== orderId) {
 			dispatch(getOrderDetails(orderId));
 		}
 	}, [orderDetails, orderId]);
 
 	const successPaymentHandler = (paymentResult) => {
-		console.log(paymentResult);
+		console.log(orderId, paymentResult);
 		dispatch(payOrder(orderId, paymentResult));
 	};
 
@@ -155,19 +130,11 @@ const OrderPage = ({ match }) => {
 								<Col>${orderDetails.totalPrice}</Col>
 							</Row>
 						</ListGroup.Item>
-						{!orderDetails.isPaid && (
-							<ListGroup.Item>
-								{loading && <Loader />}
-								{!sdkReady ? (
-									<Loader />
-								) : (
-									<PayaplButton
-										amount={orderDetails.totalPrice}
-										onSuccess={successPaymentHandler}
-									/>
-								)}
-							</ListGroup.Item>
-						)}
+						{!orderDetails.isPaid}
+						<PayPalButton
+							amount={orderDetails.totalPrice}
+							onSuccess={successPaymentHandler}
+						/>
 						<ListGroup.Item>
 							{error && <Message variant="danger" text={error} />}
 						</ListGroup.Item>

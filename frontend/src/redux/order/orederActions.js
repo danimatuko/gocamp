@@ -6,7 +6,9 @@ import {
 	GET_ORDER_DETAILS_FAIL,
 	GET_ORDER_DETAILS_REQUEST,
 	GET_ORDER_DETAILS_SUCCESS,
-	GET_ORDER_REQUEST
+	ORDER_PAY_REQUEST,
+	ORDER_PAY_SUCCESS,
+	ORDER_PAY_FAIL
 } from "./types";
 
 export const createOrder = (order) => async (dispatch, getState) => {
@@ -73,7 +75,7 @@ export const getOrderDetails = (id) => async (dispatch, getState) => {
 export const payOrder = (id, paymentResult) => async (dispatch, getState) => {
 	try {
 		dispatch({
-			type: CREATE_ORDER_REQUEST
+			type: ORDER_PAY_REQUEST
 		});
 
 		const {
@@ -87,15 +89,15 @@ export const payOrder = (id, paymentResult) => async (dispatch, getState) => {
 			}
 		};
 
-		const { data } = await Axios.put("/api/orders/id/pay", paymentResult, config);
+		const { data } = await Axios.put(`/api/orders/${id}/pay`, paymentResult, config);
 
 		dispatch({
-			type: CREATE_ORDER_SUCCESS,
+			type: ORDER_PAY_SUCCESS,
 			payload: data
 		});
 	} catch (error) {
 		dispatch({
-			type: CREATE_ORDER_FAIL,
+			type: ORDER_PAY_FAIL,
 			payload: error.response.data.message || error.message
 		});
 	}
