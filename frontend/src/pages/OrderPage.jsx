@@ -5,26 +5,22 @@ import { Link } from "react-router-dom";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
 import { getOrderDetails, payOrder } from "../redux/order/orederActions";
-import { ORDER_PAY_RESET } from "../redux/order/types";
 import { PayPalButton } from "react-paypal-button-v2";
-
-import Paypal from "../components/Paypal";
 const OrderPage = ({ match }) => {
 	const orderId = match.params.id;
 	const dispatch = useDispatch();
 
 	const { orderDetails, error, loading } = useSelector((state) => state.order);
 	const userInfo = useSelector((state) => state.user.userInfo);
-	const { shippingAddress } = orderDetails;
-
 	useEffect(() => {
 		if (!orderDetails || orderDetails._id !== orderId) {
 			dispatch(getOrderDetails(orderId));
 		}
-	}, [orderDetails, orderId]);
+	}, [orderDetails, orderId, orderDetails._id]);
+
+	const { shippingAddress } = orderDetails;
 
 	const successPaymentHandler = (paymentResult) => {
-		console.log(orderId, paymentResult);
 		dispatch(payOrder(orderId, paymentResult));
 	};
 
@@ -130,11 +126,13 @@ const OrderPage = ({ match }) => {
 								<Col>${orderDetails.totalPrice}</Col>
 							</Row>
 						</ListGroup.Item>
-						{!orderDetails.isPaid}
-						<PayPalButton
-							amount={orderDetails.totalPrice}
-							onSuccess={successPaymentHandler}
-						/>
+						{!orderDetails.isPaid && (
+							<PayPalButton
+								amount={orderDetails.totalPrice}
+								onSuccess={successPaymentHandler}
+							/>
+						)}
+
 						<ListGroup.Item>
 							{error && <Message variant="danger" text={error} />}
 						</ListGroup.Item>

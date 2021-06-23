@@ -125,9 +125,7 @@ const PlaceOrderPage = ({ history }) => {
 							</Row>
 						</ListGroup.Item>
 						<ListGroup.Item>
-							<ListGroup.Item>
-								{error && <Message variant="danger" text={error} />}
-							</ListGroup.Item>
+							{error && <Message variant="danger" text={error} />}
 							<Button
 								type="button"
 								className="w-100"

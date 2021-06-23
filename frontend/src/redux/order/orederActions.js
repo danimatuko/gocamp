@@ -8,11 +8,16 @@ import {
 	GET_ORDER_DETAILS_SUCCESS,
 	ORDER_PAY_REQUEST,
 	ORDER_PAY_SUCCESS,
-	ORDER_PAY_FAIL
+	ORDER_PAY_FAIL,
+	ORDER_DETAILS_RESET
 } from "./types";
 
 export const createOrder = (order) => async (dispatch, getState) => {
 	try {
+		dispatch({
+			type: ORDER_DETAILS_RESET
+		});
+
 		dispatch({
 			type: CREATE_ORDER_REQUEST
 		});

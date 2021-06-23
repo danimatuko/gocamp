@@ -7,7 +7,9 @@ import {
 	GET_ORDER_DETAILS_SUCCESS,
 	ORDER_PAY_FAIL,
 	ORDER_PAY_REQUEST,
-	ORDER_PAY_SUCCESS
+	ORDER_PAY_SUCCESS,
+	ORDER_PAY_RESET,
+	ORDER_DETAILS_RESET
 } from "./types";
 
 const initialState = {
@@ -42,6 +44,12 @@ const orderReducer = (state = initialState, { type, payload }) => {
 				error: payload
 			};
 
+		case ORDER_PAY_RESET:
+		case ORDER_DETAILS_RESET:
+			return {
+				...state,
+				orderDetails: null
+			};
 		default:
 			return state;
 	}
