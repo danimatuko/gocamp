@@ -9,13 +9,17 @@ import {
 	ORDER_PAY_REQUEST,
 	ORDER_PAY_SUCCESS,
 	ORDER_PAY_RESET,
-	ORDER_DETAILS_RESET
+	ORDER_DETAILS_RESET,
+	GET_MY_ORDERS_REQUEST,
+	GET_MY_ORDERS_SUCCESS,
+	GET_MY_ORDERS_FAIL
 } from "./types";
 
 const initialState = {
 	loading: false,
 	error: null,
-	orderDetails: null
+	orderDetails: null,
+	myOrders: []
 };
 
 const orderReducer = (state = initialState, { type, payload }) => {
@@ -23,6 +27,7 @@ const orderReducer = (state = initialState, { type, payload }) => {
 		case CREATE_ORDER_REQUEST:
 		case GET_ORDER_DETAILS_REQUEST:
 		case ORDER_PAY_REQUEST:
+		case GET_MY_ORDERS_REQUEST:
 			return {
 				...state,
 				loading: true
@@ -50,6 +55,20 @@ const orderReducer = (state = initialState, { type, payload }) => {
 				...state,
 				orderDetails: null
 			};
+
+		case GET_MY_ORDERS_SUCCESS:
+			return {
+				...state,
+				myOrders: payload,
+				loading: false
+			};
+		case GET_MY_ORDERS_FAIL:
+			return {
+				...state,
+				myOrders: [],
+				loading: false
+			};
+
 		default:
 			return state;
 	}
