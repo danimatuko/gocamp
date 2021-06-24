@@ -66,7 +66,7 @@ export const getOrderDetails = (id) => async (dispatch, getState) => {
 			}
 		};
 
-		const { data } = await Axios.GET(`/api/orders/${id}`, config);
+		const { data } = await Axios.get(`/api/orders/${id}`, config);
 
 		dispatch({
 			type: GET_ORDER_DETAILS_SUCCESS,
@@ -75,7 +75,7 @@ export const getOrderDetails = (id) => async (dispatch, getState) => {
 	} catch (error) {
 		dispatch({
 			type: GET_ORDER_DETAILS_FAIL,
-			payload: error.response.data.message || error.message
+			payload: error.message
 		});
 	}
 };

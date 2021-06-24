@@ -11,12 +11,13 @@ const OrderPage = ({ match }) => {
 	const dispatch = useDispatch();
 
 	const { orderDetails, error, loading } = useSelector((state) => state.order);
+
 	const userInfo = useSelector((state) => state.user.userInfo);
 	useEffect(() => {
-		if (!orderDetails || orderDetails._id !== orderId) {
+		if ( !orderDetails || orderDetails._id != orderId) {
 			dispatch(getOrderDetails(orderId));
 		}
-	}, [orderDetails, orderId, orderDetails._id]);
+	}, [orderDetails, orderId]);
 
 	const { shippingAddress } = orderDetails;
 

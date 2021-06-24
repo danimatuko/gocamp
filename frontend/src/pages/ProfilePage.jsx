@@ -4,9 +4,9 @@ import { Col, Row, Table, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
-import { getMyOrders } from "../redux/order/orederActions";
+import { getMyOrders, getOrderDetails } from "../redux/order/orederActions";
 
-const ProfilePage = () => {
+const ProfilePage = ({ history }) => {
 	const dispatch = useDispatch();
 	const order = useSelector((state) => state.order);
 	const { myOrders, loading, error } = order;
@@ -14,6 +14,11 @@ const ProfilePage = () => {
 	useEffect(() => {
 		dispatch(getMyOrders());
 	}, []);
+
+	const viewDetails = (id) => {
+		dispatch(getOrderDetails(id));
+		history.push(`/order/${id}`);
+	};
 
 	return (
 		<div>
@@ -65,7 +70,9 @@ const ProfilePage = () => {
 											)}
 										</td>
 										<td>
-											<Link to={`/order/${myorder._id}`}>Details</Link>
+											<Button onClick={() => viewDetails(myorder._id)}>
+												Details
+											</Button>
 										</td>
 									</tr>
 								))}
