@@ -6,13 +6,15 @@ import productDetailsReducer from "./product/productDetailsReducer";
 import cartReducer from "./cart/cartReducer";
 import userReducer from "./user/userReducer";
 import orderReducer from "./order/orderReducer";
+import adminReducer from "./admin/adminReducer";
 
 const rootReducer = combineReducers({
 	productList: productListReducer,
 	productDetails: productDetailsReducer,
 	cart: cartReducer,
 	user: userReducer,
-	order:orderReducer
+	admin: adminReducer,
+	order: orderReducer
 });
 
 const middleware = [thunk];
