@@ -72,6 +72,7 @@ export const getOrderDetails = (id) => async (dispatch, getState) => {
 			type: GET_ORDER_DETAILS_SUCCESS,
 			payload: data
 		});
+		localStorage.setItem("orderDetails", JSON.stringify(data));
 	} catch (error) {
 		dispatch({
 			type: GET_ORDER_DETAILS_FAIL,

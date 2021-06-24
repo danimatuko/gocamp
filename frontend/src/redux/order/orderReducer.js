@@ -18,7 +18,7 @@ import {
 const initialState = {
 	loading: false,
 	error: null,
-	orderDetails: null,
+	orderDetails: {},
 	myOrders: []
 };
 
@@ -53,7 +53,7 @@ const orderReducer = (state = initialState, { type, payload }) => {
 		case ORDER_DETAILS_RESET:
 			return {
 				...state,
-				orderDetails: null
+				orderDetails: {}
 			};
 
 		case GET_MY_ORDERS_SUCCESS:

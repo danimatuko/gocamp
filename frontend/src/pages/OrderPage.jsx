@@ -10,16 +10,15 @@ const OrderPage = ({ match }) => {
 	const orderId = match.params.id;
 	const dispatch = useDispatch();
 
-	const { orderDetails, error, loading } = useSelector((state) => state.order);
-
 	const userInfo = useSelector((state) => state.user.userInfo);
-	useEffect(() => {
-		if ( !orderDetails || orderDetails._id != orderId) {
-			dispatch(getOrderDetails(orderId));
-		}
-	}, [orderDetails, orderId]);
+	const order = useSelector((state) => state.order);
 
+	const { orderDetails, error, loading } = order;
 	const { shippingAddress } = orderDetails;
+
+	useEffect(() => {
+		!loading && dispatch(getOrderDetails(orderId));
+	}, []);
 
 	const successPaymentHandler = (paymentResult) => {
 		dispatch(payOrder(orderId, paymentResult));
@@ -127,12 +126,18 @@ const OrderPage = ({ match }) => {
 								<Col>${orderDetails.totalPrice}</Col>
 							</Row>
 						</ListGroup.Item>
-						{!orderDetails.isPaid && (
-							<PayPalButton
-								amount={orderDetails.totalPrice}
-								onSuccess={successPaymentHandler}
-							/>
-						)}
+						<ListGroup.Item>
+							{!orderDetails.isPaid ? (
+								<PayPalButton
+									amount={orderDetails.totalPrice}
+									onSuccess={successPaymentHandler}
+								/>
+							) : (
+								<Button as={Link} to="/profile" className="w-100">
+									MY ORDERS
+								</Button>
+							)}
+						</ListGroup.Item>
 
 						<ListGroup.Item>
 							{error && <Message variant="danger" text={error} />}
