@@ -32,7 +32,7 @@ const register = asyncHandler(async (req, res) => {
 				last_name: user.last_name,
 				email: user.email,
 				isAdmin: user.isAdmin,
-				token: generateToken(user._id)
+				token: generateToken(user._id, user.isAdmin)
 			});
 		} else {
 			res.status(400);
@@ -51,7 +51,7 @@ const login = asyncHandler(async (req, res) => {
 			last_name: user.last_name,
 			email: user.email,
 			isAdmin: user.isAdmin,
-			token: generateToken(user._id)
+			token: generateToken(user._id, user.isAdmin)
 		});
 	} else {
 		res.status(401);
@@ -74,4 +74,9 @@ const getUserProfile = asyncHandler(async (req, res) => {
 	});
 });
 
-export { login, getUserProfile, register };
+const getUsers = asyncHandler(async (req, res) => {
+	const users = await User.find({});
+	res.json(users);
+});
+
+export { login, getUserProfile, register, getUsers };
