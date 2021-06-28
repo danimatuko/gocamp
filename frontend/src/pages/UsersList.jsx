@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
-import { getUsers } from "../redux/admin/adminActions";
+import { deleteUser, getUsers } from "../redux/admin/adminActions";
 
 const UsersList = ({ history, location }) => {
 	const dispatch = useDispatch();
@@ -58,8 +58,8 @@ const UsersList = ({ history, location }) => {
 									</Button>
 									<Button
 										variant="danger"
-										to={`user/${user._id}/edit`}
 										className="btn-sm"
+										onClick={() => dispatch(deleteUser(user._id))}
 									>
 										<i className="fas fa-trash"></i>
 									</Button>

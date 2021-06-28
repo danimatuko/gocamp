@@ -1,5 +1,12 @@
 import Axios from "axios";
-import { GET_ALL_USERS_REQUEST, GET_ALL_USERS_SUCCESS, GET_ALL_USERS_FAIL } from "./adminTypes";
+import {
+	GET_ALL_USERS_REQUEST,
+	GET_ALL_USERS_SUCCESS,
+	GET_ALL_USERS_FAIL,
+	DELETE_USER_REQUEST,
+	DELETE_USER_SUCCESS,
+	DELETE_USER_FAIL
+} from "./adminTypes";
 
 export const getUsers = () => async (dispatch, getState) => {
 	try {
@@ -26,6 +33,38 @@ export const getUsers = () => async (dispatch, getState) => {
 	} catch (error) {
 		dispatch({
 			type: GET_ALL_USERS_FAIL,
+			payload: error.response.data.message || error.message
+		});
+	}
+};
+
+export const deleteUser = (id) => async (dispatch, getState) => {
+	try {
+		dispatch({
+			type: DELETE_USER_REQUEST
+		});
+
+		const {
+			user: { userInfo }
+		} = getState();
+
+		const config = {
+			headers: {
+				Authorization: `${userInfo.token}`
+			}
+		};
+
+		const { data } = await Axios.delete(`/api/users/${id}`, config);
+
+		dispatch({
+			type: DELETE_USER_SUCCESS,
+			payload: data
+		});
+
+		dispatch(getUsers());
+	} catch (error) {
+		dispatch({
+			type: DELETE_USER_FAIL,
 			payload: error.response.data.message || error.message
 		});
 	}
