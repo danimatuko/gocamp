@@ -17,6 +17,7 @@ import UsersList from "./pages/UsersList";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
 import { useSelector } from "react-redux";
 import AdminRoute from "./components/AdminRoute";
+import EditUserPage from "./pages/EditUser";
 
 const App = () => {
 	// const user = useSelector((state) => state.user);
@@ -38,6 +39,7 @@ const App = () => {
 						<Route path={`/place-order`} component={PlaceOrderPage} />
 						<Route path={`/order/:id`} component={OrderPage} />
 						<AdminRoute path={`/admin/users`} component={UsersList} />
+						<AdminRoute path={`/admin/user/:id/edit`} component={EditUserPage} />
 					</Container>
 				</main>
 				<Footer />

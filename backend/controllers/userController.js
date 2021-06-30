@@ -74,9 +74,36 @@ const getUserProfile = asyncHandler(async (req, res) => {
 	});
 });
 
+const getUserById = asyncHandler(async (req, res) => {
+	const user = await User.findById(req.params.id).select("-password");
+	if (!user) {
+		res.status(404);
+		throw new Error("User not found");
+	}
+	res.json(user);
+});
+
+/* AMDIN ACCSESS */
+
 const getUsers = asyncHandler(async (req, res) => {
 	const users = await User.find({});
 	res.json(users);
+});
+
+const editUser = asyncHandler(async (req, res) => {
+	const user = await User.findById(req.params.id).select("-password");
+	if (!user) {
+		res.status(404);
+		throw new Error("User not found");
+	}
+
+	user.first_name = req.body.first_name || user.first_name;
+	user.last_name = req.body.last_name || user.last_name;
+	user.isAdmin = req.body.isAdmin;
+
+	await user.save();
+
+	res.json(user);
 });
 
 const deleteUser = asyncHandler(async (req, res) => {
@@ -91,4 +118,4 @@ const deleteUser = asyncHandler(async (req, res) => {
 	}
 });
 
-export { login, getUserProfile, register, getUsers, deleteUser };
+export { login, getUserProfile, register, getUsers, deleteUser, getUserById, editUser };

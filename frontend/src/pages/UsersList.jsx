@@ -6,12 +6,12 @@ import Message from "../components/Message";
 import Loader from "../components/Loader";
 import { deleteUser, getUsers } from "../redux/admin/adminActions";
 
-const UsersList = ({ history, location }) => {
+const UsersList = () => {
 	const dispatch = useDispatch();
-	const { users, loading, error } = useSelector((state) => state.admin);
+	const { users, loading, error, userProfile } = useSelector((state) => state.admin);
 	useEffect(() => {
 		dispatch(getUsers());
-	}, [dispatch]);
+	}, [dispatch, userProfile]);
 
 	return (
 		<>
@@ -51,7 +51,7 @@ const UsersList = ({ history, location }) => {
 								<td>
 									<Button
 										as={Link}
-										to={`user/${user._id}/edit`}
+										to={`/admin/user/${user._id}/edit`}
 										className="btn-sm"
 									>
 										<i className="fas fa-edit"></i>
