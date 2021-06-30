@@ -13,15 +13,14 @@ import PaymentPage from "./pages/PaymentPage";
 import PlaceOrderPage from "./pages/PlaceOrderPage";
 import OrderPage from "./pages/OrderPage";
 import ProfilePage from "./pages/ProfilePage";
-import UsersList from "./pages/UsersList";
+import UsersListPage from "./pages/UsersListPage";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
-import { useSelector } from "react-redux";
 import AdminRoute from "./components/AdminRoute";
 import EditUserPage from "./pages/EditUser";
+import ProductsListPage from "./pages/ProductsListPage";
 
 const App = () => {
-	// const user = useSelector((state) => state.user);
-	// const { userInfo } = user;
+
 	return (
 		<Router>
 			<div className="App">
@@ -38,8 +37,9 @@ const App = () => {
 						<Route path={`/payment`} component={PaymentPage} />
 						<Route path={`/place-order`} component={PlaceOrderPage} />
 						<Route path={`/order/:id`} component={OrderPage} />
-						<AdminRoute path={`/admin/users`} component={UsersList} />
+						<AdminRoute path={`/admin/users`} component={UsersListPage} />
 						<AdminRoute path={`/admin/user/:id/edit`} component={EditUserPage} />
+						<AdminRoute path={`/admin/products`} component={ProductsListPage} />
 					</Container>
 				</main>
 				<Footer />

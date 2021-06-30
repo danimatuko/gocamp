@@ -6,7 +6,7 @@ import Message from "../components/Message";
 import Loader from "../components/Loader";
 import { deleteUser, getUsers } from "../redux/admin/adminActions";
 
-const UsersList = () => {
+const UsersListPage = () => {
 	const dispatch = useDispatch();
 	const { users, loading, error, userProfile } = useSelector((state) => state.admin);
 	useEffect(() => {
@@ -73,4 +73,4 @@ const UsersList = () => {
 	);
 };
 
-export default UsersList;
+export default UsersListPage;
