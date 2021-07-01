@@ -1,4 +1,4 @@
-import productTypes from "./types";
+import * as productTypes from "./productTypes";
 
 const initialState = {
 	product: {

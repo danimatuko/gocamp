@@ -1,18 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Table, Button, Row, Col } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
-import { getAllProducts } from "../redux/product/actions";
+import { getAllProducts, deleteProduct } from "../redux/product/productActions";
 
 const ProductsListPage = ({ history, match }) => {
 	const dispatch = useDispatch();
-	//const { users, loading, error } = useSelector((state) => state.admin);
 	const { loading, error, products } = useSelector((state) => state.productList);
+	const { deleteSuccess } = useSelector((state) => state.productDelete);
 	useEffect(() => {
 		dispatch(getAllProducts());
-	}, [dispatch]);
+	}, [dispatch, deleteSuccess]);
 
 	return (
 		<>
@@ -62,7 +62,7 @@ const ProductsListPage = ({ history, match }) => {
 									<Button
 										variant="danger"
 										className="btn-sm"
-										//onClick={() => dispatch(deleteProduct(product._id))}
+										onClick={() => dispatch(deleteProduct(product._id))}
 									>
 										<i className="fas fa-trash"></i>
 									</Button>

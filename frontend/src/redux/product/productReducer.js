@@ -1,4 +1,4 @@
-import productTypes from "./types";
+import * as productTypes from "./productTypes";
 
 const initialState = {
 	loading: false,
@@ -8,7 +8,7 @@ const initialState = {
 
 const productListReducer = (state = initialState, action) => {
 	switch (action.type) {
-		case productTypes.GET_ALL_PRODUCTS:
+		case productTypes.GET_ALL_PRODUCTS_REQUEST:
 			return {
 				loading: true
 			};

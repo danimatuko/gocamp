@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { Row, Col, Image, ListGroup, ListGroupItem, Button, Form } from "react-bootstrap";
 import Rating from "../components/Rating";
-import { getProductDetails } from "../redux/product/actions";
+import { getProductDetails } from "../redux/product/productActions";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
 import { addToCart } from "../redux/cart/cartActions";
