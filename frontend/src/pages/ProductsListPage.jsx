@@ -4,15 +4,34 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
-import { getAllProducts, deleteProduct } from "../redux/product/productActions";
+import { getAllProducts, deleteProduct, createProduct } from "../redux/product/productActions";
 
-const ProductsListPage = ({ history, match }) => {
+const ProductsListPage = ({ history }) => {
 	const dispatch = useDispatch();
+	/* PRODUCTS LIST */
 	const { loading, error, products } = useSelector((state) => state.productList);
-	const { deleteSuccess } = useSelector((state) => state.productDelete);
+	const { newProduct } = useSelector((state) => state.productUpdate);
+	const { product: createdProduct } = useSelector((state) => state.productCreate);
+	/* PRODUCT DELETE */
+	const {
+		loading: loadingDelete,
+		error: errorDelete,
+		deleteSuccess
+	} = useSelector((state) => state.productDelete);
+	/* PRODUCT CREATE  */
+	const {
+		loading: loadinCreate,
+		error: errorCreate,
+		product
+	} = useSelector((state) => state.productCreate);
+
 	useEffect(() => {
 		dispatch(getAllProducts());
-	}, [dispatch, deleteSuccess]);
+	}, [dispatch, deleteSuccess, product, newProduct]);
+
+	const addProduct = () => {
+		dispatch(createProduct());
+	};
 
 	return (
 		<>
@@ -21,16 +40,16 @@ const ProductsListPage = ({ history, match }) => {
 					<h1>Products</h1>
 				</Col>
 				<Col className="text-end">
-					<Button>
+					<Button onClick={() => addProduct()}>
 						<i className="fas fa-plus me-1"></i>Add Product
 					</Button>
 				</Col>
 			</Row>
 
-			{loading ? (
+			{loading || loadingDelete || loadinCreate ? (
 				<Loader />
-			) : error ? (
-				<Message variant="danger" text={error} />
+			) : error || errorDelete || errorCreate ? (
+				<Message variant="danger" text={error || errorDelete || errorCreate} />
 			) : (
 				<Table striped bordered hover responsive className="table-sm">
 					<thead>

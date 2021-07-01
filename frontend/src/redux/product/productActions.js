@@ -44,6 +44,72 @@ export const getProductDetails = (id) => {
 		}
 	};
 };
+// create a sample product (no need to pass a product).
+// The details will be updated in another request
+export const createProduct = () => {
+	return async (dispatch, getState) => {
+		try {
+			dispatch({
+				type: productTypes.CREATE_PRODUCT_REQUEST
+			});
+
+			const {
+				user: { userInfo }
+			} = getState();
+
+			const config = {
+				headers: {
+					Authorization: `${userInfo.token}`
+				}
+			};
+			const { data } = await Axios.post(`/api/products`, {}, config);
+
+			dispatch({
+				type: productTypes.CREATE_PRODUCT_SUCCESS,
+				payload: data
+			});
+
+			window.location.href = `/admin/product/${data._id}/edit`;
+		} catch (error) {
+			dispatch({
+				type: productTypes.CREATE_PRODUCT_FAIL,
+				payload: error.response.data.message || error.message
+			});
+		}
+	};
+};
+
+export const updateProduct = (product) => {
+	return async (dispatch, getState) => {
+		try {
+			dispatch({
+				type: productTypes.UPDATE_PRODUCT_REQUEST
+			});
+
+			const {
+				user: { userInfo }
+			} = getState();
+
+			const config = {
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: `${userInfo.token}`
+				}
+			};
+			const { data } = await Axios.put(`/api/products/${product._id}`, product, config);
+
+			dispatch({
+				type: productTypes.UPDATE_PRODUCT_SUCCESS,
+				payload: data
+			});
+		} catch (error) {
+			dispatch({
+				type: productTypes.UPDATE_PRODUCT_FAIL,
+				payload: error.response.data.message || error.message
+			});
+		}
+	};
+};
 
 export const deleteProduct = (id) => {
 	return async (dispatch, getState) => {

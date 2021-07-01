@@ -6,10 +6,8 @@ const Loader = () => {
 };
 
 const style = {
-	width: "100px",
-	height: "100px",
 	display: "block",
-	margin: "auto"
+	margin: "30vh auto"
 };
 
 export default Loader;

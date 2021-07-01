@@ -18,9 +18,9 @@ import ProtectedRoute from "./components/ProtectedRoute.jsx";
 import AdminRoute from "./components/AdminRoute";
 import EditUserPage from "./pages/EditUser";
 import ProductsListPage from "./pages/ProductsListPage";
+import ProductEditPage from "./pages/ProductEditPage";
 
 const App = () => {
-
 	return (
 		<Router>
 			<div className="App">
@@ -40,6 +40,7 @@ const App = () => {
 						<AdminRoute path={`/admin/users`} component={UsersListPage} />
 						<AdminRoute path={`/admin/user/:id/edit`} component={EditUserPage} />
 						<AdminRoute path={`/admin/products`} component={ProductsListPage} />
+						<AdminRoute path={`/admin/product/:id/edit`} component={ProductEditPage} />
 					</Container>
 				</main>
 				<Footer />
