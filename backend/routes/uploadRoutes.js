@@ -1,6 +1,9 @@
 import express from "express";
 import multer from "multer";
 import path from "path";
+import admin from "../middleware/adminMiddlware.js";
+import auth from "../middleware/authMiddleware.js";
+
 const router = express.Router();
 
 const storage = multer.diskStorage({
@@ -12,23 +15,26 @@ const storage = multer.diskStorage({
 	}
 });
 
-const checkFileType = (req, file, cb) => {
+const checkFileType = (file, cb) => {
 	const filetypes = /jpg|jpeg|png/;
 	const extname = filetypes.test(path.extname(file.originalname).toLocaleLowerCase());
 	const mimeType = filetypes.test(file.mimeType);
 	if (extname && mimeType) {
-		cb(file, true);
+		return cb(null, true);
 	} else {
 		cb("Images only");
 	}
 };
 
-var upload = multer({ storage: storage });
+const upload = multer({
+	storage: storage
+	// fileFilter: function (req, file, cb) {
+	// 	checkFileType(file, cb);
+	// }
+});
 
-// const upload = multer({
-// 	storage: storage
-// });
-
-router.post("/", upload.single("image"), (req, res) => res.send(`/${req.file.path}`));
+router.post("/", [auth, admin, upload.single("image")], (req, res) =>
+	res.send(`/${req.file.path}`)
+);
 
 export default router;

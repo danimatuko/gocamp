@@ -10,6 +10,7 @@ import Axios from "axios";
 const ProductEditPage = ({ match, history }) => {
 	const productId = match.params.id;
 	const { product, loading, error } = useSelector((state) => state.productDetails);
+	const { userInfo } = useSelector((state) => state.user);
 	const {
 		newProduct,
 		loading: loadingUpdate,
@@ -53,7 +54,8 @@ const ProductEditPage = ({ match, history }) => {
 		try {
 			const config = {
 				headers: {
-					"Content-Type": "multipart/form-data"
+					"Content-Type": "multipart/form-data",
+					Authorization: `${userInfo.token}`
 				}
 			};
 
@@ -110,6 +112,7 @@ const ProductEditPage = ({ match, history }) => {
 					<Form.Group>
 						<Form.Label>Image Upload</Form.Label>
 						<Form.File
+							accept="image/jpg, image/jpeg, image/png"
 							type="file"
 							onChange={(e) => handleChange(uploadFile(e))}
 						></Form.File>
