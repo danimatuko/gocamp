@@ -8,17 +8,17 @@ import { getAllProducts, deleteProduct, createProduct } from "../redux/product/p
 
 const ProductsListPage = ({ history }) => {
 	const dispatch = useDispatch();
-	/* PRODUCTS LIST */
+	/* PRODUCTS LIST REDUCER */
 	const { loading, error, products } = useSelector((state) => state.productList);
 	const { newProduct } = useSelector((state) => state.productUpdate);
 	const { product: createdProduct } = useSelector((state) => state.productCreate);
-	/* PRODUCT DELETE */
+	/* PRODUCT DELETE  REDUCER*/
 	const {
 		loading: loadingDelete,
 		error: errorDelete,
 		deleteSuccess
 	} = useSelector((state) => state.productDelete);
-	/* PRODUCT CREATE  */
+	/* PRODUCT CREATE REDUCER*/
 	const {
 		loading: loadinCreate,
 		error: errorCreate,

@@ -69,7 +69,7 @@ export const createProduct = () => {
 				payload: data
 			});
 
-			window.location.href = `/admin/product/${data._id}/edit`;
+			//	window.location.href = `/admin/product/${data._id}/edit`;
 		} catch (error) {
 			dispatch({
 				type: productTypes.CREATE_PRODUCT_FAIL,

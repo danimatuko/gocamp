@@ -5,6 +5,7 @@ import FormContainer from "../components/FormContainer";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
 import { getProductDetails, updateProduct } from "../redux/product/productActions";
+import Axios from "axios";
 
 const ProductEditPage = ({ match, history }) => {
 	const productId = match.params.id;
@@ -27,6 +28,8 @@ const ProductEditPage = ({ match, history }) => {
 		description: ""
 	};
 
+	const [uploading, setUploading] = useState(false);
+
 	const [updatedProduct, setuUpdatedProduct] = useState(initialState);
 
 	useEffect(() => {
@@ -41,10 +44,31 @@ const ProductEditPage = ({ match, history }) => {
 		setuUpdatedProduct({ ...updatedProduct, [name]: value });
 	};
 
+	const uploadFile = async (e) => {
+		const file = e.target.files[0];
+		const formData = new FormData();
+		formData.append("image", file);
+		setUploading(true);
+
+		try {
+			const config = {
+				headers: {
+					"Content-Type": "multipart/form-data"
+				}
+			};
+
+			const { data } = await Axios.post("/api/upload", formData, config);
+			setuUpdatedProduct({ ...updatedProduct, image: data });
+			setUploading(false);
+		} catch (error) {
+			setUploading(false);
+			console.log(error);
+		}
+	};
+
 	const submitHandler = (e) => {
 		e.preventDefault();
-		const product = updatedProduct;
-		dispatch(updateProduct(product));
+		dispatch(updateProduct(updatedProduct));
 		history.push("/admin/products");
 	};
 
@@ -55,7 +79,7 @@ const ProductEditPage = ({ match, history }) => {
 			<h1>Edit Product</h1>
 			{error || (errorUpdate && <Message variant="danger" text={error | errorUpdate} />)}
 			{loading || (loadingUpdate && <Loader />)}
-			<Form onSubmit={submitHandler}>
+			<Form onSubmit={submitHandler} encType="multipart/form-data">
 				<Form.Group controlId="name">
 					<Form.Label> Name</Form.Label>
 					<Form.Control
@@ -75,14 +99,22 @@ const ProductEditPage = ({ match, history }) => {
 						onChange={(e) => handleChange(e.target)}
 					></Form.Control>
 				</Form.Group>
-				<Form.Group controlId="image">
-					<Form.Label>Image</Form.Label>
+				<Form.Group>
+					<Form.Label>Image URL</Form.Label>
 					<Form.Control
 						name="image"
 						type="text"
 						value={image}
 						onChange={(e) => handleChange(e.target)}
 					></Form.Control>
+					<Form.Group>
+						<Form.Label>Image Upload</Form.Label>
+						<Form.File
+							type="file"
+							onChange={(e) => handleChange(uploadFile(e))}
+						></Form.File>
+						{uploading && <Loader />}
+					</Form.Group>
 				</Form.Group>
 				<Form.Label>Brand</Form.Label>
 				<Form.Group controlId="brand">
@@ -92,6 +124,7 @@ const ProductEditPage = ({ match, history }) => {
 						value={brand}
 						onChange={(e) => handleChange(e.target)}
 					></Form.Control>
+					{uploading && <Loader />}
 				</Form.Group>
 				<Form.Label>Count In Stock</Form.Label>
 				<Form.Group controlId="countInStock">
