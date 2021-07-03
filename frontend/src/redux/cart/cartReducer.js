@@ -3,7 +3,8 @@ import {
 	CART_REMOVE_ITEM,
 	CART_REMOVE_ONE_QTY,
 	CART_SAVE_PAYMENT_METHOD,
-	CART_SAVE_SHIPPING_ADDRESS
+	CART_SAVE_SHIPPING_ADDRESS,
+	CART_EMPTY
 } from "./types";
 
 const initialState = {
@@ -71,6 +72,12 @@ const cartReducer = (state = initialState, { type, payload }) => {
 			};
 		}
 
+		case CART_EMPTY: {
+			return {
+				...state,
+				cartItems: []
+			};
+		}
 		default:
 			return state;
 	}

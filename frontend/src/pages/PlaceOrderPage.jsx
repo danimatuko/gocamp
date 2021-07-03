@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import CheckoutSteps from "../components/CheckoutSteps";
 import Message from "../components/Message";
-import { createOrder } from "../redux/order/orederActions";
+import { createOrder, getOrderDetails, resetOrderDetails } from "../redux/order/orederActions";
 
 const PlaceOrderPage = ({ history }) => {
 	const cart = useSelector((state) => state.cart);
@@ -29,8 +29,10 @@ const PlaceOrderPage = ({ history }) => {
 	const { orderDetails, error, loading } = useSelector((state) => state.order);
 
 	useEffect(() => {
-		if (orderDetails) history.push(`/order/${orderDetails._id}`);
-	}, [history, orderDetails]);
+		orderDetails._id && !orderDetails.isPaid
+			? history.push(`/order/${orderDetails._id}`)
+			: dispatch(resetOrderDetails());
+	}, [history, orderDetails._id]);
 
 	const placeOrderHandler = () => {
 		dispatch(
@@ -56,6 +58,7 @@ const PlaceOrderPage = ({ history }) => {
 							<h2>Shipping</h2>
 							<p>
 								<strong>Address:</strong>
+
 								{` ${shippingAddress.street}, ${shippingAddress.city},
 								 ${shippingAddress.postalCode}, ${shippingAddress.country}`}
 							</p>

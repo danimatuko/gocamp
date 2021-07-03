@@ -19,6 +19,7 @@ import AdminRoute from "./components/AdminRoute";
 import EditUserPage from "./pages/EditUser";
 import ProductsListPage from "./pages/ProductsListPage";
 import ProductEditPage from "./pages/ProductEditPage";
+import OrdersListPage from "./pages/OrdersListPage";
 
 const App = () => {
 	return (
@@ -41,6 +42,7 @@ const App = () => {
 						<AdminRoute path={`/admin/user/:id/edit`} component={EditUserPage} />
 						<AdminRoute path={`/admin/products`} component={ProductsListPage} />
 						<AdminRoute path={`/admin/product/:id/edit`} component={ProductEditPage} />
+						<AdminRoute path={`/admin/orders`} component={OrdersListPage} />
 					</Container>
 				</main>
 				<Footer />

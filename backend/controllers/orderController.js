@@ -68,4 +68,11 @@ const getUserOrders = asyncHandler(async (req, res) => {
 	res.json(orders);
 });
 
-export { addOrderItems, getOrderById, updateOrderToPaid, getUserOrders };
+const getAllOrders = asyncHandler(async (req, res) => {
+	const orders = await Order.find({});
+	if (!orders) throw new Error("No orders found");
+
+	res.json(orders);
+});
+
+export { addOrderItems, getOrderById, updateOrderToPaid, getUserOrders ,getAllOrders};

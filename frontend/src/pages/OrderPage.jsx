@@ -4,24 +4,33 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
-import { getOrderDetails, payOrder } from "../redux/order/orederActions";
+import { getOrderDetails, payOrder, resetOrderDetails } from "../redux/order/orederActions";
 import { PayPalButton } from "react-paypal-button-v2";
+import { emptyCart } from "../redux/cart/cartActions";
 const OrderPage = ({ match }) => {
 	const orderId = match.params.id;
 	const dispatch = useDispatch();
 
 	const userInfo = useSelector((state) => state.user.userInfo);
 	const order = useSelector((state) => state.order);
+	const cart = useSelector((state) => state.cart);
 
 	const { orderDetails, error, loading } = order;
-	const { shippingAddress } = orderDetails;
-
+	const { shippingAddress } = cart;
+	/* 
 	useEffect(() => {
 		!loading && dispatch(getOrderDetails(orderId));
 	}, []);
+ */
+	useEffect(() => {
+		if (!order || orderDetails._id !== orderId) {
+			dispatch(getOrderDetails(orderId));
+		}
+	}, [orderDetails, orderId]);
 
 	const successPaymentHandler = (paymentResult) => {
 		dispatch(payOrder(orderId, paymentResult));
+		dispatch(emptyCart());
 	};
 
 	return loading ? (
@@ -42,6 +51,7 @@ const OrderPage = ({ match }) => {
 							</span>
 							<p>
 								<strong>Address:</strong>
+
 								{` ${shippingAddress.street}, ${shippingAddress.city},
 								 ${shippingAddress.postalCode}, ${shippingAddress.country}`}
 							</p>

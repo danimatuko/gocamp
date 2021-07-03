@@ -12,7 +12,10 @@ import {
 	ORDER_DETAILS_RESET,
 	GET_MY_ORDERS_REQUEST,
 	GET_MY_ORDERS_SUCCESS,
-	GET_MY_ORDERS_FAIL
+	GET_MY_ORDERS_FAIL,
+	GET_ALL_ORDERS_REQUEST,
+	GET_ALL_ORDERS_SUCCESS,
+	GET_ALL_ORDERS_FAIL
 } from "./types";
 
 export const createOrder = (order) => async (dispatch, getState) => {
@@ -127,7 +130,6 @@ export const getMyOrders = () => async (dispatch, getState) => {
 				Authorization: `${userInfo.token}`
 			}
 		};
-
 		const { data } = await Axios.get("/api/orders/myorders", config);
 
 		dispatch({
@@ -140,4 +142,40 @@ export const getMyOrders = () => async (dispatch, getState) => {
 			payload: error.response.data.message || error.message
 		});
 	}
+};
+
+export const getAllOrders = () => async (dispatch, getState) => {
+	try {
+		dispatch({
+			type: GET_ALL_ORDERS_REQUEST
+		});
+
+		const {
+			user: { userInfo }
+		} = getState();
+
+		const config = {
+			headers: {
+				Authorization: `${userInfo.token}`
+			}
+		};
+
+		const { data } = await Axios.get("/api/orders", config);
+
+		dispatch({
+			type: GET_ALL_ORDERS_SUCCESS,
+			payload: data
+		});
+	} catch (error) {
+		dispatch({
+			type: GET_ALL_ORDERS_FAIL,
+			payload: error.response.data.message || error.message
+		});
+	}
+};
+
+export const resetOrderDetails = () => async (dispatch, getState) => {
+	dispatch({
+		type: ORDER_DETAILS_RESET
+	});
 };
