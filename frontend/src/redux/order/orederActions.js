@@ -15,7 +15,10 @@ import {
 	GET_MY_ORDERS_FAIL,
 	GET_ALL_ORDERS_REQUEST,
 	GET_ALL_ORDERS_SUCCESS,
-	GET_ALL_ORDERS_FAIL
+	GET_ALL_ORDERS_FAIL,
+	ORDER_DELIVER_REQUEST,
+	ORDER_DELIVER_SUCCESS,
+	ORDER_DELIVER_FAIL
 } from "./types";
 
 export const createOrder = (order) => async (dispatch, getState) => {
@@ -110,6 +113,37 @@ export const payOrder = (id, paymentResult) => async (dispatch, getState) => {
 	} catch (error) {
 		dispatch({
 			type: ORDER_PAY_FAIL,
+			payload: error.response.data.message || error.message
+		});
+	}
+};
+
+export const deliverOrder = (id) => async (dispatch, getState) => {
+	try {
+		dispatch({
+			type: ORDER_DELIVER_REQUEST
+		});
+
+		const {
+			user: { userInfo }
+		} = getState();
+
+		const config = {
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `${userInfo.token}`
+			}
+		};
+
+		const { data } = await Axios.put(`/api/orders/${id}/deliver`, {}, config);
+
+		dispatch({
+			type: ORDER_DELIVER_SUCCESS,
+			payload: data
+		});
+	} catch (error) {
+		dispatch({
+			type: ORDER_DELIVER_FAIL,
 			payload: error.response.data.message || error.message
 		});
 	}

@@ -5,7 +5,8 @@ import {
 	getOrderById,
 	updateOrderToPaid,
 	getUserOrders,
-	getAllOrders
+	getAllOrders,
+	updateOrderToDelivered
 } from "../controllers/orderController.js";
 import auth from "../middleware/authMiddleware.js";
 import admin from "../middleware/adminMiddlware.js";
@@ -16,6 +17,7 @@ router.get("/", [auth, admin], getAllOrders);
 
 router.post("/", auth, addOrderItems);
 
-router.put("/:id/pay", updateOrderToPaid);
+router.put("/:id/pay", auth, updateOrderToPaid);
+router.put("/:id/deliver", [auth, admin], updateOrderToDelivered);
 
 export default router;

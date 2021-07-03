@@ -15,7 +15,10 @@ import {
 	GET_MY_ORDERS_FAIL,
 	GET_ALL_ORDERS_REQUEST,
 	GET_ALL_ORDERS_FAIL,
-	GET_ALL_ORDERS_SUCCESS
+	GET_ALL_ORDERS_SUCCESS,
+	ORDER_DELIVER_REQUEST,
+	ORDER_DELIVER_SUCCESS,
+	ORDER_DELIVER_FAIL
 } from "./types";
 
 const initialState = {
@@ -33,6 +36,7 @@ const orderReducer = (state = initialState, { type, payload }) => {
 		case ORDER_PAY_REQUEST:
 		case GET_MY_ORDERS_REQUEST:
 		case GET_ALL_ORDERS_REQUEST:
+		case ORDER_DELIVER_REQUEST:
 			return {
 				...state,
 				loading: true
@@ -40,6 +44,7 @@ const orderReducer = (state = initialState, { type, payload }) => {
 		case CREATE_ORDER_SUCCESS:
 		case GET_ORDER_DETAILS_SUCCESS:
 		case ORDER_PAY_SUCCESS:
+		case ORDER_DELIVER_SUCCESS:
 			return {
 				...state,
 				loading: false,
@@ -49,6 +54,7 @@ const orderReducer = (state = initialState, { type, payload }) => {
 		case GET_ORDER_DETAILS_FAIL:
 		case ORDER_PAY_FAIL:
 		case GET_ALL_ORDERS_FAIL:
+		case ORDER_DELIVER_FAIL:
 			return {
 				...state,
 				loading: false,

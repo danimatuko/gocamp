@@ -4,7 +4,12 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
-import { getOrderDetails, payOrder, resetOrderDetails } from "../redux/order/orederActions";
+import {
+	deliverOrder,
+	getOrderDetails,
+	payOrder,
+	resetOrderDetails
+} from "../redux/order/orederActions";
 import { PayPalButton } from "react-paypal-button-v2";
 import { emptyCart } from "../redux/cart/cartActions";
 const OrderPage = ({ match }) => {
@@ -17,20 +22,20 @@ const OrderPage = ({ match }) => {
 
 	const { orderDetails, error, loading } = order;
 	const { shippingAddress } = cart;
-	/* 
-	useEffect(() => {
-		!loading && dispatch(getOrderDetails(orderId));
-	}, []);
- */
+
 	useEffect(() => {
 		if (!order || orderDetails._id !== orderId) {
 			dispatch(getOrderDetails(orderId));
 		}
-	}, [orderDetails, orderId]);
+	}, [orderDetails, orderId, orderDetails.isDelivered]);
 
 	const successPaymentHandler = (paymentResult) => {
 		dispatch(payOrder(orderId, paymentResult));
 		dispatch(emptyCart());
+	};
+
+	const deliverHandler = (id) => {
+		dispatch(deliverOrder(id));
 	};
 
 	return loading ? (
@@ -55,13 +60,13 @@ const OrderPage = ({ match }) => {
 								{` ${shippingAddress.street}, ${shippingAddress.city},
 								 ${shippingAddress.postalCode}, ${shippingAddress.country}`}
 							</p>
-							{orderDetails.isDeleviered ? (
+							{orderDetails.isDelivered ? (
 								<Message
 									variant={"success"}
-									text={`Deleviered on ${orderDetails.delevierdAt}`}
+									text={`Deleviered on ${orderDetails.deliveredAt}`}
 								/>
 							) : (
-								<Message variant={"danger"} text={`Not Deleviered`} />
+								<Message variant={"danger"} text={`Not Delivered`} />
 							)}
 						</ListGroup.Item>
 						<ListGroup.Item>
@@ -148,6 +153,16 @@ const OrderPage = ({ match }) => {
 								</Button>
 							)}
 						</ListGroup.Item>
+						{userInfo.isAdmin && orderDetails.isPaid && !orderDetails.isDelivered && (
+							<ListGroup.Item>
+								<Button
+									className="w-100"
+									onClick={() => deliverHandler(orderDetails._id)}
+								>
+									Mark As Delivered
+								</Button>
+							</ListGroup.Item>
+						)}
 
 						<ListGroup.Item>
 							{error && <Message variant="danger" text={error} />}
