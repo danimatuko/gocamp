@@ -52,7 +52,7 @@ const OrderPage = ({ match }) => {
 							<h2>Shipping</h2>
 							<strong className="me-1">Name:</strong>
 							<span>
-								{userInfo.first_name} {userInfo.last_name}
+								{orderDetails.user.first_name} {orderDetails.user.last_name}
 							</span>
 							<p>
 								<strong>Address:</strong>
