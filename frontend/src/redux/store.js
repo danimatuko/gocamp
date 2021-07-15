@@ -10,6 +10,7 @@ import adminReducer from "./admin/adminReducer";
 import productDeleteReducer from "./product/productDeleteReducer";
 import productCreateReducer from "./product/productCreateReducer";
 import productUpdateReducer from "./product/productUpdateReducer";
+import productReviewReducer from "./product/productReviewReducer";
 
 const rootReducer = combineReducers({
 	productList: productListReducer,
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
 	productDetails: productDetailsReducer,
 	productUpdate: productUpdateReducer,
 	productDelete: productDeleteReducer,
+	productReview: productReviewReducer,
 	cart: cartReducer,
 	user: userReducer,
 	admin: adminReducer,

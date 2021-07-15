@@ -10,7 +10,8 @@ const Rating = ({ value, text }) => {
 						value >= index
 							? "fas fa-star"
 							: (value = index - 0.5 ? "fas fa-star-half-alt" : "far fa-star")
-					}></i>
+					}
+				></i>
 			))}
 
 			<div>{text && text}</div>

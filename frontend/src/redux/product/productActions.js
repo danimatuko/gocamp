@@ -140,3 +140,35 @@ export const deleteProduct = (id) => {
 		}
 	};
 };
+
+export const createProductReview = (productId, review) => {
+	return async (dispatch, getState) => {
+		try {
+			dispatch({
+				type: productTypes.CREATE_PRODUCT_REVIEW_REQUEST
+			});
+
+			const {
+				user: { userInfo }
+			} = getState();
+
+			const config = {
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: `${userInfo.token}`
+				}
+			};
+			const { data } = await Axios.post(`/api/products/${productId}/reviews`, review, config);
+
+			dispatch({
+				type: productTypes.CREATE_PRODUCT_REVIEW_SUCCESS,
+				payload: data
+			});
+		} catch (error) {
+			dispatch({
+				type: productTypes.CREATE_PRODUCT_REVIEW_FAIL,
+				payload: error.response.data.message || error.message
+			});
+		}
+	};
+};

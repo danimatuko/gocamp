@@ -37,7 +37,7 @@ const Header = () => {
 									</NavDropdown.Item>
 								</NavDropdown>
 							) : (
-								<Nav.Link as={Link} to="login">
+								<Nav.Link as={Link} to="/login">
 									<i className="fas fa-user me-1"></i>Sign-In
 								</Nav.Link>
 							)}

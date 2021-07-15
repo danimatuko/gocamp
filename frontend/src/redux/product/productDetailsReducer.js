@@ -1,9 +1,10 @@
 import * as productTypes from "./productTypes";
 
 const initialState = {
-	product: {},
-	loading: false,
-	reviews: []
+	product: {
+		reviews: []
+	},
+	loading: false
 };
 
 const productDetailsReducer = (state = initialState, action) => {
