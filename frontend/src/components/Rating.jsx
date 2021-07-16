@@ -8,8 +8,10 @@ const Rating = ({ value, text }) => {
 					key={index}
 					className={
 						value >= index
-							? "fas fa-star"
-							: (value = index - 0.5 ? "fas fa-star-half-alt" : "far fa-star")
+							? "fas fa-star" // full-star
+							: value >= index - 0.5
+							? "fas fa-star-half-alt" // half-star
+							: "far fa-star" // empty-star
 					}
 				></i>
 			))}
