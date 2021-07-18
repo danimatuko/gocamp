@@ -8,7 +8,7 @@ import Message from "../components/Message";
 import Paginate from "../components/Paginate";
 
 const HomePage = ({ match, location }) => {
-	const { products, loading, error } = useSelector((state) => state.productList);
+	const { products, loading, error, totalPages } = useSelector((state) => state.productList);
 	const dispatch = useDispatch();
 	const pageNumber = location.search.split("=")[1] || 1;
 	useEffect(() => {
@@ -31,7 +31,7 @@ const HomePage = ({ match, location }) => {
 							</Col>
 						))}
 					</Row>
-					<Paginate pageNumber={pageNumber} />
+					<Paginate page={pageNumber} total={totalPages} />
 				</>
 			)}
 		</div>

@@ -6,6 +6,7 @@ const initialState = {
 	page: 1,
 	sumOfProducts: null,
 	totalPages: 1,
+	resultsPerPage: null,
 	error: null
 };
 
@@ -21,7 +22,8 @@ const productListReducer = (state = initialState, action) => {
 				products: action.payload.products,
 				page: action.payload.page,
 				sumOfProducts: action.payload.sumOfProducts,
-				totalPages:action.payload.totalPages
+				totalPages: action.payload.totalPages,
+				resultsPerPage: action.payload.resultsPerPage
 			};
 		case productTypes.GET_ALL_PRODUCTS_FAIL:
 			return {

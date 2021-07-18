@@ -1,21 +1,20 @@
 import React from "react";
 import { Pagination } from "react-bootstrap";
-import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 
-const Paginate = ({ pageNumber }) => {
-	const { page, totalPages } = useSelector((state) => state.productList);
-
+const Paginate = ({ total, page }) => {
+	const location = useLocation();
+	const path = location.pathname;
+	if (total <= 1) return null;
+    
 	return (
-		totalPages > 1 && (
-			<Pagination>
-				{[...Array(totalPages).keys()].map((pageNum) => (
-					<Pagination.Item key={pageNum} active={pageNum + 1 == pageNumber} as={Link}>
-						<Link to={`/?page=${pageNum + 1}`}>{pageNum + 1}</Link>
-					</Pagination.Item>
-				))}
-			</Pagination>
-		)
+		<Pagination className="justify-content-center my-3">
+			{[...Array(total).keys()].map((p) => (
+				<Pagination.Item key={p} active={p + 1 == page} as="span">
+					<Link to={`${path}?/page=${p + 1}`}>{p + 1}</Link>
+				</Pagination.Item>
+			))}
+		</Pagination>
 	);
 };
 

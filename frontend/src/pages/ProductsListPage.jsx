@@ -5,11 +5,13 @@ import { Link } from "react-router-dom";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
 import { getAllProducts, deleteProduct, createProduct } from "../redux/product/productActions";
+import Paginate from "../components/Paginate";
 
-const ProductsListPage = ({ history }) => {
+const ProductsListPage = ({ history, location }) => {
 	const dispatch = useDispatch();
+
 	/* PRODUCTS LIST REDUCER */
-	const { loading, error, products } = useSelector((state) => state.productList);
+	const { loading, error, products, totalPages } = useSelector((state) => state.productList);
 	const { newProduct } = useSelector((state) => state.productUpdate);
 	const { product: createdProduct } = useSelector((state) => state.productCreate);
 	/* PRODUCT DELETE  REDUCER*/
@@ -25,9 +27,11 @@ const ProductsListPage = ({ history }) => {
 		product
 	} = useSelector((state) => state.productCreate);
 
+	const pageNumber = location.search.split("=")[1] || 1;
+
 	useEffect(() => {
-		dispatch(getAllProducts());
-	}, [dispatch, deleteSuccess, product, newProduct]);
+		dispatch(getAllProducts(pageNumber));
+	}, [dispatch, deleteSuccess, product, newProduct, pageNumber]);
 
 	const addProduct = () => {
 		dispatch(createProduct());
@@ -51,45 +55,48 @@ const ProductsListPage = ({ history }) => {
 			) : error || errorDelete || errorCreate ? (
 				<Message variant="danger" text={error || errorDelete || errorCreate} />
 			) : (
-				<Table striped bordered hover responsive className="table-sm">
-					<thead>
-						<tr>
-							<th>ID</th>
-							<th>NAME</th>
-							<th>PRICE</th>
-							<th>CATEGORY</th>
-							<th>BRAND</th>
-						</tr>
-					</thead>
-					<tbody>
-						{products.map((product) => (
-							<tr key={product._id}>
-								<td>{product._id}</td>
-								<td>${product.price}</td>
-								<td>{product.name}</td>
-								<td>{product.category}</td>
-								<td>{product.brand}</td>
-
-								<td>
-									<Button
-										as={Link}
-										to={`/admin/product/${product._id}/edit`}
-										className="btn-sm"
-									>
-										<i className="fas fa-edit"></i>
-									</Button>
-									<Button
-										variant="danger"
-										className="btn-sm"
-										onClick={() => dispatch(deleteProduct(product._id))}
-									>
-										<i className="fas fa-trash"></i>
-									</Button>
-								</td>
+				<>
+					<Table striped bordered hover responsive className="table-sm">
+						<thead>
+							<tr>
+								<th>ID</th>
+								<th>NAME</th>
+								<th>PRICE</th>
+								<th>CATEGORY</th>
+								<th>BRAND</th>
 							</tr>
-						))}
-					</tbody>
-				</Table>
+						</thead>
+						<tbody>
+							{products.map((product) => (
+								<tr key={product._id}>
+									<td>{product._id}</td>
+									<td>${product.price}</td>
+									<td>{product.name}</td>
+									<td>{product.category}</td>
+									<td>{product.brand}</td>
+
+									<td>
+										<Button
+											as={Link}
+											to={`/admin/product/${product._id}/edit`}
+											className="btn-sm"
+										>
+											<i className="fas fa-edit"></i>
+										</Button>
+										<Button
+											variant="danger"
+											className="btn-sm"
+											onClick={() => dispatch(deleteProduct(product._id))}
+										>
+											<i className="fas fa-trash"></i>
+										</Button>
+									</td>
+								</tr>
+							))}
+						</tbody>
+					</Table>
+					<Paginate page={pageNumber} total={totalPages} />
+				</>
 			)}
 		</>
 	);

@@ -45,6 +45,10 @@ const App = () => {
 						<AdminRoute path={`/admin/users`} component={UsersListPage} />
 						<AdminRoute path={`/admin/user/:id/edit`} component={EditUserPage} />
 						<AdminRoute path={`/admin/products`} component={ProductsListPage} />
+						<AdminRoute
+							path={`/admin/products?page=:page`}
+							component={ProductsListPage}
+						/>
 						<AdminRoute path={`/admin/product/:id/edit`} component={ProductEditPage} />
 						<AdminRoute path={`/admin/orders`} component={OrdersListPage} />
 					</Container>

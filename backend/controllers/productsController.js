@@ -3,14 +3,14 @@ import asyncHandler from "express-async-handler";
 
 const getProducts = asyncHandler(async (req, res) => {
 	const page = Number(req.query.page) || 1;
-	const resultsPerPage = 10;
+	const resultsPerPage = 2;
 	const sumOfProducts = await Product.countDocuments();
 	const totalPages = sumOfProducts / resultsPerPage;
-
+ 
 	const products = await Product.find()
 		.limit(resultsPerPage)
 		.skip(resultsPerPage * (page - 1));
-	res.status(200).json({ products, page, totalPages, sumOfProducts,totalPages });
+	res.status(200).json({ products, page, totalPages, resultsPerPage });
 });
 
 const getProductById = asyncHandler(async (req, res) => {
