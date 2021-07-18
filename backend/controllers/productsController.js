@@ -2,8 +2,15 @@ import Product from "../models/Product.js";
 import asyncHandler from "express-async-handler";
 
 const getProducts = asyncHandler(async (req, res) => {
-	const products = await Product.find({});
-	res.status(200).json(products);
+	const page = Number(req.query.page) || 1;
+	const resultsPerPage = 10;
+	const sumOfProducts = await Product.countDocuments();
+	const totalPages = sumOfProducts / resultsPerPage;
+
+	const products = await Product.find()
+		.limit(resultsPerPage)
+		.skip(resultsPerPage * (page - 1));
+	res.status(200).json({ products, page, totalPages, sumOfProducts,totalPages });
 });
 
 const getProductById = asyncHandler(async (req, res) => {

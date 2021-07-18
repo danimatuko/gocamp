@@ -1,14 +1,14 @@
 import * as productTypes from "./productTypes";
 import Axios from "axios";
 
-export const getAllProducts = () => {
+export const getAllProducts = (page) => {
 	return async (dispatch) => {
 		try {
 			dispatch({
 				type: productTypes.GET_ALL_PRODUCTS_REQUEST
 			});
 
-			const { data } = await Axios.get("/api/products");
+			const { data } = await Axios.get(`/api/products?page=${page}`);
 
 			dispatch({
 				type: productTypes.GET_ALL_PRODUCTS_SUCCESS,

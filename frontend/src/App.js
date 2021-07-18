@@ -31,6 +31,7 @@ const App = () => {
 				<main className="py-5" style={{ minHeight: "85vh" }}>
 					<Container>
 						<Route path={"/"} exact component={HomePage} />
+						<Route path={"/?page=:page"} component={HomePage} />
 						<Route path="/products/search=:keyword" component={ProductSearchResults} />
 						<Route path="/profile" exact component={ProfilePage} />
 						<Route path="/product/:id" exact component={ProductPage} />

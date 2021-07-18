@@ -1,3 +1,9 @@
 .rating i {
 	color: #f8e825;
 }
+
+li.active a {
+	color: white;
+	height: 100%;
+	width: 100%;
+}
