@@ -172,3 +172,25 @@ export const createProductReview = (productId, review) => {
 		}
 	};
 };
+
+export const searchProduct = (keyword) => {
+	return async (dispatch) => {
+		try {
+			dispatch({
+				type: productTypes.SEARCH_PRODUCT_REQUEST
+			});
+
+			const { data } = await Axios.get(`/api/products/search=${keyword}`);
+
+			dispatch({
+				type: productTypes.SEARCH_PRODUCT_SUCCESS,
+				payload: data
+			});
+		} catch (error) {
+			dispatch({
+				type: productTypes.SEARCH_PRODUCT_FAIL,
+				payload: error.response.data.message || error.message
+			});
+		}
+	};
+};

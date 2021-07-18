@@ -20,6 +20,8 @@ import EditUserPage from "./pages/EditUser";
 import ProductsListPage from "./pages/ProductsListPage";
 import ProductEditPage from "./pages/ProductEditPage";
 import OrdersListPage from "./pages/OrdersListPage";
+import productSearchReducer from "./redux/product/productSearchReducer";
+import ProductSearchResults from "./pages/ProductsSearchResults";
 
 const App = () => {
 	return (
@@ -28,7 +30,8 @@ const App = () => {
 				<Header />
 				<main className="py-5" style={{ minHeight: "85vh" }}>
 					<Container>
-						<Route path="/" exact component={HomePage} />
+						<Route path={"/"} exact component={HomePage} />
+						<Route path="/products/search=:keyword" component={ProductSearchResults} />
 						<Route path="/profile" exact component={ProfilePage} />
 						<Route path="/product/:id" exact component={ProductPage} />
 						<Route path={`/cart/:id?`} component={CartPage} />

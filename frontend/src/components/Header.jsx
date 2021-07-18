@@ -3,6 +3,7 @@ import { Navbar, Nav, Container, NavDropdown } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { logout } from "../redux/user/userActions";
+import SearchBox from "./SearchBox";
 
 const Header = () => {
 	const { userInfo } = useSelector((state) => state.user);
@@ -16,6 +17,8 @@ const Header = () => {
 					</Navbar.Brand>
 					<Navbar.Toggle aria-controls="navbarScroll" />
 					<Navbar.Collapse id="navbarScroll">
+						<SearchBox />
+
 						<Nav className="ms-auto" style={{ maxHeight: "100px" }} navbarScroll>
 							<Nav.Link as={Link} to="/">
 								<i className="fas fa-home me-1"></i>Home

@@ -2,21 +2,21 @@ import React, { useEffect } from "react";
 import { Row, Col } from "react-bootstrap";
 import Product from "../components/Product";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllProducts } from "../redux/product/productActions";
+import { getAllProducts, searchProduct } from "../redux/product/productActions";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
 
-const HomePage = () => {
-	const { products, loading, error } = useSelector((state) => state.productList);
+const ProductSearchResults = ({ match }) => {
+	const { products, loading, error } = useSelector((state) => state.productSearch);
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		dispatch(getAllProducts());
-	}, [dispatch]);
+		dispatch(searchProduct(match.params.keyword));
+	}, [dispatch, match.params.keyword]);
 
 	return (
 		<div>
-			<h1>Lateset products</h1>
+			<h1>products Found</h1>
 			{loading ? (
 				<Loader />
 			) : error ? (
@@ -34,4 +34,4 @@ const HomePage = () => {
 	);
 };
 
-export default HomePage;
+export default ProductSearchResults;

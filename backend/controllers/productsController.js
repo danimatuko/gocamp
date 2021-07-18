@@ -102,11 +102,23 @@ const addProductReview = asyncHandler(async (req, res) => {
 	}
 });
 
+const searchProduct = asyncHandler(async (req, res) => {
+	const products = await Product.find({
+		name: {
+			$regex: "^" + req.params.keyword,
+			$options: "i"
+		}
+	});
+
+	res.status(200).json(products);
+});
+
 export {
 	getProducts,
 	getProductById,
 	deleteProduct,
 	createProduct,
 	updateProduct,
-	addProductReview
+	addProductReview,
+	searchProduct
 };

@@ -4,12 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
-import {
-	deliverOrder,
-	getOrderDetails,
-	payOrder,
-	resetOrderDetails
-} from "../redux/order/orederActions";
+import { deliverOrder, getOrderDetails, payOrder } from "../redux/order/orederActions";
 import { PayPalButton } from "react-paypal-button-v2";
 import { emptyCart } from "../redux/cart/cartActions";
 const OrderPage = ({ match }) => {
