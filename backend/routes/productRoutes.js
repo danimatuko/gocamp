@@ -7,12 +7,14 @@ import {
 	createProduct,
 	updateProduct,
 	addProductReview,
-	searchProduct
+	searchProduct,
+	topRatedProducts
 } from "../controllers/productsController.js";
 import admin from "../middleware/adminMiddlware.js";
 import auth from "../middleware/authMiddleware.js";
 
 router.get("/", getProducts);
+router.get("/top-rated", topRatedProducts);
 router.get("/search=:keyword", searchProduct);
 router.get("/:id", getProductById);
 router.post("/:id/reviews", auth, addProductReview);

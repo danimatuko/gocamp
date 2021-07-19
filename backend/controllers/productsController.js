@@ -3,10 +3,10 @@ import asyncHandler from "express-async-handler";
 
 const getProducts = asyncHandler(async (req, res) => {
 	const page = Number(req.query.page) || 1;
-	const resultsPerPage = 2;
+	const resultsPerPage = 10;
 	const sumOfProducts = await Product.countDocuments();
 	const totalPages = sumOfProducts / resultsPerPage;
- 
+
 	const products = await Product.find()
 		.limit(resultsPerPage)
 		.skip(resultsPerPage * (page - 1));
@@ -120,6 +120,11 @@ const searchProduct = asyncHandler(async (req, res) => {
 	res.status(200).json(products);
 });
 
+const topRatedProducts = asyncHandler(async (req, res) => {
+	const topRatedProducts = await Product.find().sort({ rating: -1 }).limit(3);
+	res.status(200).json(topRatedProducts);
+});
+
 export {
 	getProducts,
 	getProductById,
@@ -127,5 +132,6 @@ export {
 	createProduct,
 	updateProduct,
 	addProductReview,
-	searchProduct
+	searchProduct,
+	topRatedProducts
 };

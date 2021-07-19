@@ -7,3 +7,10 @@ li.active a {
 	height: 100%;
 	width: 100%;
 }
+
+
+.carousel-control-next span,
+.carousel-control-prev span {
+	background-color: black;
+	padding: 2.5rem;
+}

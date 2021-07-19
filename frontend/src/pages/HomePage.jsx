@@ -6,6 +6,7 @@ import { getAllProducts } from "../redux/product/productActions";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
 import Paginate from "../components/Paginate";
+import TopRatedProducts from "../components/TopRatedProducts";
 
 const HomePage = ({ match, location }) => {
 	const { products, loading, error, totalPages } = useSelector((state) => state.productList);
@@ -17,7 +18,12 @@ const HomePage = ({ match, location }) => {
 
 	return (
 		<div>
-			<h1>Lateset products</h1>
+			<Row>
+				<Col>
+					<TopRatedProducts />
+				</Col>
+			</Row>
+			<h1 className="mb-3">Lateset products</h1>
 			{loading ? (
 				<Loader />
 			) : error ? (

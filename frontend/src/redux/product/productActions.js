@@ -194,3 +194,25 @@ export const searchProduct = (keyword) => {
 		}
 	};
 };
+
+export const getTopRatedProducts = () => {
+	return async (dispatch) => {
+		try {
+			dispatch({
+				type: productTypes.GET_TOP_RATED_PRODUCTS_REQUEST
+			});
+
+			const { data } = await Axios.get(`/api/products/top-rated`);
+
+			dispatch({
+				type: productTypes.GET_TOP_RATED_PRODUCTS_SUCCESS,
+				payload: data
+			});
+		} catch (error) {
+			dispatch({
+				type: productTypes.GET_TOP_RATED_PRODUCTS_FAIL,
+				payload: error.response.data.message || error.message
+			});
+		}
+	};
+};
