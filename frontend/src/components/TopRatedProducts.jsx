@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { Carousel, Image } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 import { getTopRatedProducts } from "../redux/product/productActions";
 import Loader from "./Loader";
 import Message from "./Message";
@@ -23,13 +24,15 @@ const TopRatedProducts = () => {
 			<Carousel pause="hover" variant="dark" className="mb-5">
 				{topRatedProducts.map((product) => (
 					<Carousel.Item style={{ height: "500px" }}>
-						<Image
-							src={product.image}
-							style={{ height: " 100%", width: "100%", objectFit: "fill" }}
-						/>
-						<Carousel.Caption>
-							<h3>{product.name}</h3>
-						</Carousel.Caption>
+						<Link to={`/product/${product._id}`}>
+							<Image
+								src={product.image}
+								style={{ height: "80%", width: "100%", objectFit: "contain" }}
+							/>
+							<Carousel.Caption>
+								<h3>{product.name}</h3>
+							</Carousel.Caption>
+						</Link>
 					</Carousel.Item>
 				))}
 			</Carousel>

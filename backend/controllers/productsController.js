@@ -10,7 +10,12 @@ const getProducts = asyncHandler(async (req, res) => {
 	const products = await Product.find()
 		.limit(resultsPerPage)
 		.skip(resultsPerPage * (page - 1));
-	res.status(200).json({ products, page, totalPages, resultsPerPage });
+
+	if (products) res.status(200).json({ products, page, totalPages, resultsPerPage });
+	else {
+		res.status(404);
+		throw new Error("Products not found");
+	}
 });
 
 const getProductById = asyncHandler(async (req, res) => {

@@ -60,7 +60,7 @@ const ProductPage = ({ match, history }) => {
 
 	return (
 		<>
-			<Link className="btn btn-light my-3" to="/">
+			<Link className="btn btn-dark my-3" to="/">
 				Go Back
 			</Link>
 			{loading ? (
@@ -86,7 +86,12 @@ const ProductPage = ({ match, history }) => {
 							<ListGroup>
 								<ListGroupItem>Price: ${product.price}</ListGroupItem>
 								<ListGroupItem>
-									Status: {product.countInStock > 0 ? "In Stock" : "Out Of Stock"}
+									Status:{" "}
+									{product.countInStock > 0 ? (
+										<span>In Stock</span>
+									) : (
+										<span className="text-danger">Out Of Stock</span>
+									)}
 								</ListGroupItem>
 								{product.countInStock > 0 && (
 									<ListGroupItem>
@@ -172,7 +177,9 @@ const ProductPage = ({ match, history }) => {
 											</Form.Group>
 										</Form>
 									) : (
-										<p>Sign In to write a review</p>
+										<p>
+											<Link to="/login">Sign In</Link> to write a review
+										</p>
 									)}
 								</ListGroupItem>
 							</ListGroup>

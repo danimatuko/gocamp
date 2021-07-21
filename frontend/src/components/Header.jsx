@@ -13,7 +13,7 @@ const Header = () => {
 			<Navbar bg="dark" variant="dark" expand="lg" collapseOnSelect>
 				<Container>
 					<Navbar.Brand as={Link} to="/">
-						MobilePro
+						GOCAMP
 					</Navbar.Brand>
 					<Navbar.Toggle aria-controls="navbarScroll" />
 					<Navbar.Collapse id="navbarScroll">

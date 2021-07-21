@@ -2,6 +2,7 @@ import * as productTypes from "./productTypes";
 import Axios from "axios";
 
 export const getAllProducts = (page) => {
+	console.log(typeof(page));
 	return async (dispatch) => {
 		try {
 			dispatch({
@@ -9,7 +10,6 @@ export const getAllProducts = (page) => {
 			});
 
 			const { data } = await Axios.get(`/api/products?page=${page}`);
-
 			dispatch({
 				type: productTypes.GET_ALL_PRODUCTS_SUCCESS,
 				payload: data

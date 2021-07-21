@@ -11,7 +11,7 @@ import TopRatedProducts from "../components/TopRatedProducts";
 const HomePage = ({ match, location }) => {
 	const { products, loading, error, totalPages } = useSelector((state) => state.productList);
 	const dispatch = useDispatch();
-	const pageNumber = location.search.split("=")[1] || 1;
+	const pageNumber = location.search.split("=")[1] || "1";
 	useEffect(() => {
 		dispatch(getAllProducts(pageNumber));
 	}, [dispatch, pageNumber]);
@@ -37,7 +37,7 @@ const HomePage = ({ match, location }) => {
 							</Col>
 						))}
 					</Row>
-					<Paginate page={pageNumber} total={totalPages} />
+					<Paginate page={pageNumber} total={Math.ceil(totalPages)} />
 				</>
 			)}
 		</div>

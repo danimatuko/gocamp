@@ -16,19 +16,23 @@ const ProductSearchResults = ({ match }) => {
 
 	return (
 		<div>
-			<h1>products Found</h1>
+			<h1> ({products && products.length}) Resutls Found</h1>
+
 			{loading ? (
 				<Loader />
 			) : error ? (
 				<Message variant="danger" text={error} />
 			) : (
-				<Row>
-					{products.map((product) => (
-						<Col key={product._id} sm={12} md={6} lg={4} xl={3}>
-							<Product product={product} />
-						</Col>
-					))}
-				</Row>
+				<>
+					{products.length < 1 && <Message variant="warning" text={"No resutls found"} />}
+					<Row>
+						{products.map((product) => (
+							<Col key={product._id} sm={12} md={6} lg={4} xl={3}>
+								<Product product={product} />
+							</Col>
+						))}
+					</Row>
+				</>
 			)}
 		</div>
 	);
