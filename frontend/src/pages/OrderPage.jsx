@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Image, ListGroup, Row, Col, Button } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
 import { deliverOrder, getOrderDetails, payOrder } from "../redux/order/orederActions";
@@ -17,12 +17,13 @@ const OrderPage = ({ match }) => {
 
 	const { orderDetails, error, loading } = order;
 	const { shippingAddress } = cart;
+	const { user, orderItems } = orderDetails;
 
 	useEffect(() => {
-		if (!order || orderDetails._id !== orderId) {
+		if ((!order || orderDetails._id !== orderId, !user, !orderItems)) {
 			dispatch(getOrderDetails(orderId));
 		}
-	}, [orderDetails, orderId, orderDetails.isDelivered]);
+	}, [orderDetails, orderId, orderDetails.isDelivered, user, orderItems]);
 
 	const successPaymentHandler = (paymentResult) => {
 		dispatch(payOrder(orderId, paymentResult));
@@ -47,7 +48,7 @@ const OrderPage = ({ match }) => {
 							<h2>Shipping</h2>
 							<strong className="me-1">Name:</strong>
 							<span>
-								{orderDetails.user.first_name} {orderDetails.user.last_name}
+								{user && user.first_name} {user && user.last_name}
 							</span>
 							<p>
 								<strong>Address:</strong>
@@ -80,28 +81,33 @@ const OrderPage = ({ match }) => {
 						</ListGroup.Item>
 						<ListGroup.Item>
 							<h2>Order Items</h2>
-							{orderDetails.orderItems.length === 0 ? (
+							{orderItems && orderItems.length === 0 ? (
 								<Message text="Your cart is empty" variant="warning" />
 							) : (
 								<ListGroup variant="flush">
-									{orderDetails.orderItems.map((item) => (
-										<ListGroup.Item key={item._id}>
-											<Row>
-												<Col md={1}>
-													<Image src={item.image} alt={item.name} fluid />
-												</Col>
-												<Col md={6}>
-													<Link to={`/product/${item._id}`}>
-														{item.name}
-													</Link>
-												</Col>
-												<Col md={4}>
-													{item.qty} x ${item.price} =
-													{Number(item.qty * item.price).toFixed(2)}
-												</Col>
-											</Row>
-										</ListGroup.Item>
-									))}
+									{orderItems &&
+										orderItems.map((item) => (
+											<ListGroup.Item key={item._id}>
+												<Row>
+													<Col md={1}>
+														<Image
+															src={item.image}
+															alt={item.name}
+															fluid
+														/>
+													</Col>
+													<Col md={6}>
+														<Link to={`/product/${item._id}`}>
+															{item.name}
+														</Link>
+													</Col>
+													<Col md={4}>
+														{item.qty} x ${item.price} =
+														{Number(item.qty * item.price).toFixed(2)}
+													</Col>
+												</Row>
+											</ListGroup.Item>
+										))}
 								</ListGroup>
 							)}
 						</ListGroup.Item>
