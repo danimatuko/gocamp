@@ -6,10 +6,10 @@ const Paginate = ({ total, page }) => {
 	const location = useLocation();
 	const path = location.pathname;
 	if (total <= 1) return null;
-    
+
 	return (
 		<Pagination className="justify-content-center my-3">
-			{[...Array(total).keys()].map((p) => (
+			{[...Array(Math.ceil(total)).keys()].map((p) => (
 				<Pagination.Item key={p} active={p + 1 == page} as="span">
 					<Link to={`${path}?/page=${p + 1}`}>{p + 1}</Link>
 				</Pagination.Item>

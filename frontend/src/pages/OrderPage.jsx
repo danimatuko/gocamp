@@ -16,8 +16,7 @@ const OrderPage = ({ match }) => {
 	const cart = useSelector((state) => state.cart);
 
 	const { orderDetails, error, loading } = order;
-	const { shippingAddress } = cart;
-	const { user, orderItems } = orderDetails;
+	const { user, orderItems, shippingAddress } = orderDetails;
 
 	useEffect(() => {
 		if ((!order || orderDetails._id !== orderId, !user, !orderItems)) {
@@ -52,8 +51,8 @@ const OrderPage = ({ match }) => {
 							</span>
 							<p>
 								<strong>Address:</strong>
-
-								{` ${shippingAddress.street}, ${shippingAddress.city},
+								{shippingAddress &&
+									` ${shippingAddress.street}, ${shippingAddress.city},
 								 ${shippingAddress.postalCode}, ${shippingAddress.country}`}
 							</p>
 							{orderDetails.isDelivered ? (

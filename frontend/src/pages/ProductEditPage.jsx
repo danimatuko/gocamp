@@ -31,18 +31,18 @@ const ProductEditPage = ({ match, history }) => {
 
 	const [uploading, setUploading] = useState(false);
 
-	const [updatedProduct, setuUpdatedProduct] = useState(initialState);
+	const [updatedProduct, setUpdatedProduct] = useState(initialState);
 
 	useEffect(() => {
 		if (productId != product._id) {
 			dispatch(getProductDetails(match.params.id));
 		} else {
-			setuUpdatedProduct(product);
+			setUpdatedProduct(product);
 		}
 	}, [match.params.id, product]);
 
 	const handleChange = ({ name, value }) => {
-		setuUpdatedProduct({ ...updatedProduct, [name]: value });
+		setUpdatedProduct({ ...updatedProduct, [name]: value });
 	};
 
 	const uploadFile = async (e) => {
@@ -60,7 +60,7 @@ const ProductEditPage = ({ match, history }) => {
 			};
 
 			const { data } = await Axios.post("/api/upload", formData, config);
-			setuUpdatedProduct({ ...updatedProduct, image: data });
+			setUpdatedProduct({ ...updatedProduct, image: data });
 			setUploading(false);
 		} catch (error) {
 			setUploading(false);
@@ -71,6 +71,8 @@ const ProductEditPage = ({ match, history }) => {
 	const submitHandler = (e) => {
 		e.preventDefault();
 		dispatch(updateProduct(updatedProduct));
+		dispatch(getProductDetails(productId));
+
 		history.push("/admin/products");
 	};
 
@@ -133,7 +135,7 @@ const ProductEditPage = ({ match, history }) => {
 				<Form.Group controlId="countInStock">
 					<Form.Control
 						name="countInStock"
-						type="text"
+						type="number"
 						value={countInStock}
 						onChange={(e) => handleChange(e.target)}
 					></Form.Control>
@@ -150,6 +152,8 @@ const ProductEditPage = ({ match, history }) => {
 				<Form.Label>Description</Form.Label>
 				<Form.Group controlId="description">
 					<Form.Control
+						as="textarea"
+						rows={5}
 						name="description"
 						type="text"
 						value={description}

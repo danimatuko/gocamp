@@ -8,7 +8,7 @@ import Message from "../components/Message";
 import Paginate from "../components/Paginate";
 import TopRatedProducts from "../components/TopRatedProducts";
 
-const HomePage = ({ match, location }) => {
+const HomePage = ({ location }) => {
 	const { products, loading, error, totalPages } = useSelector((state) => state.productList);
 	const dispatch = useDispatch();
 	const pageNumber = location.search.split("=")[1] || "1";

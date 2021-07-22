@@ -2,7 +2,6 @@ import * as productTypes from "./productTypes";
 import Axios from "axios";
 
 export const getAllProducts = (page) => {
-	console.log(typeof(page));
 	return async (dispatch) => {
 		try {
 			dispatch({

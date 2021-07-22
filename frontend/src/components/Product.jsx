@@ -12,7 +12,9 @@ const Product = ({ product }) => {
 			<Card.Body>
 				<Link to={`/product/${product._id}`}>
 					<Card.Title as="div" className="h5">
-						{product.name}
+						{product.name.length > 35
+							? product.name.substring(0, 20) + `...`
+							: product.name}
 					</Card.Title>
 				</Link>
 				<Card.Text as="div">

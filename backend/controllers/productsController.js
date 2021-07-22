@@ -3,7 +3,7 @@ import asyncHandler from "express-async-handler";
 
 const getProducts = asyncHandler(async (req, res) => {
 	const page = Number(req.query.page) || 1;
-	const resultsPerPage = 10;
+	const resultsPerPage = 12;
 	const sumOfProducts = await Product.countDocuments();
 	const totalPages = sumOfProducts / resultsPerPage;
 
@@ -45,7 +45,7 @@ const createProduct = asyncHandler(async (req, res) => {
 });
 
 const updateProduct = asyncHandler(async (req, res) => {
-	const { name, price, image, brand, categorey, countInStock, decription } = req.body;
+	const { name, price, image, brand, categorey, countInStock, description } = req.body;
 
 	const product = await Product.findById(req.params.id);
 
@@ -53,7 +53,7 @@ const updateProduct = asyncHandler(async (req, res) => {
 		product.name = name;
 		product.price = price;
 		product.image = image;
-		product.decription = decription;
+		product.description = description;
 		product.brand = brand;
 		product.categorey = categorey;
 		product.countInStock = countInStock;
