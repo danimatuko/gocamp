@@ -13,7 +13,7 @@ import morgan from "morgan";
 dotenv.config();
 
 const app = express();
-
+console.log(process.env.NODE_ENV);
 if (process.env.NODE_ENV === "development") {
 	app.use(morgan("dev"));
 }
@@ -29,11 +29,19 @@ app.use("/api/orders", orderRoutes);
 app.use("/api/upload", uploadRoutes);
 app.get("/api/config/paypal", (req, res) => res.send(process.env.PAYPAL_CLIENT_ID));
 
-const dirName = path.resolve();
-app.use("/uploads", express.static(path.join(dirName, "/uploads")));
+const __dirname = path.resolve(); // ____dirname is not defined in ES module scope
+app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
+
+if (process.env.NODE_ENV === "production") {
+	// Express will serve up production assets
+	app.use(express.static(path.join(__dirname, "/frontend/build")));
+	// Express will serve up the front-end index.html file if it doesn't recognize the route
+	app.get("*", (req, res) =>
+		res.sendFile(path.resolve(__dirname, "frontend", "build", "index.html"))
+	);
+}
 
 app.use(notFound);
-
 app.use(errorHandler);
 
 app.listen(
