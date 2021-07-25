@@ -11,11 +11,9 @@ const ProductEditPage = ({ match, history }) => {
 	const productId = match.params.id;
 	const { product, loading, error } = useSelector((state) => state.productDetails);
 	const { userInfo } = useSelector((state) => state.user);
-	const {
-		newProduct,
-		loading: loadingUpdate,
-		error: errorUpdate
-	} = useSelector((state) => state.productUpdate);
+	const { loading: loadingUpdate, error: errorUpdate } = useSelector(
+		(state) => state.productUpdate
+	);
 	const dispatch = useDispatch();
 
 	// LOCAL STATE
@@ -34,12 +32,12 @@ const ProductEditPage = ({ match, history }) => {
 	const [updatedProduct, setUpdatedProduct] = useState(initialState);
 
 	useEffect(() => {
-		if (productId != product._id) {
+		if (productId !== product._id) {
 			dispatch(getProductDetails(match.params.id));
 		} else {
 			setUpdatedProduct(product);
 		}
-	}, [match.params.id, product]);
+	}, [dispatch, match.params.id, product, productId]);
 
 	const handleChange = ({ name, value }) => {
 		setUpdatedProduct({ ...updatedProduct, [name]: value });
@@ -98,7 +96,6 @@ const ProductEditPage = ({ match, history }) => {
 					<Form.Control
 						type="number"
 						name="price"
-						type="text"
 						value={price}
 						onChange={(e) => handleChange(e.target)}
 					></Form.Control>

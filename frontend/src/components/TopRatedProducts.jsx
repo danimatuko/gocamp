@@ -27,7 +27,7 @@ const TopRatedProducts = () => {
 				<h1 className="mb-3">Top Rated</h1>
 				<Carousel pause="hover" variant="dark" className="mb-3">
 					{topRatedProducts.map((product) => (
-						<Carousel.Item style={{ height: "500px" }}>
+						<Carousel.Item key={product._id} style={{ height: "500px" }}>
 							<Link to={`/product/${product._id}`}>
 								<Image
 									className="d-block mx-auto"

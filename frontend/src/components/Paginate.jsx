@@ -10,7 +10,7 @@ const Paginate = ({ total, page }) => {
 	return (
 		<Pagination className="justify-content-center my-3">
 			{[...Array(Math.ceil(total)).keys()].map((p) => (
-				<Pagination.Item key={p} active={p + 1 == page} as="span">
+				<Pagination.Item key={p} active={p + 1 === Number(page)} as="span">
 					<Link to={`${path}?/page=${p + 1}`}>{p + 1}</Link>
 				</Pagination.Item>
 			))}

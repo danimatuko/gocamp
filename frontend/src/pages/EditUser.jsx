@@ -18,7 +18,7 @@ const EditUserPage = ({ match, history }) => {
 	const [isAdmin, setIsAdmin] = useState(false);
 
 	useEffect(() => {
-		if (match.params.id != userProfile._id) {
+		if (match.params.id !== userProfile._id) {
 			dispatch(getUserById(match.params.id));
 		} else {
 			setFirstName(userProfile.first_name);
@@ -26,7 +26,7 @@ const EditUserPage = ({ match, history }) => {
 			setEmail(userProfile.email);
 			setIsAdmin(userProfile.isAdmin);
 		}
-	}, [match.params.id, userProfile]);
+	}, [dispatch, match.params.id, userProfile]);
 
 	const submitHandler = (e) => {
 		e.preventDefault();

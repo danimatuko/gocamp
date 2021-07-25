@@ -38,22 +38,24 @@ const cartReducer = (state = initialState, { type, payload }) => {
 				};
 			}
 		}
-		case CART_REMOVE_ONE_QTY: {
-			const id = payload;
-			const itemExist = state.cartItems.find((item) => item._id === id);
+		case CART_REMOVE_ONE_QTY:
+			{
+				const id = payload;
+				const itemExist = state.cartItems.find((item) => item._id === id);
 
-			if (itemExist) {
-				const editedItem = { ...itemExist };
-				editedItem.qty -= 1;
+				if (itemExist) {
+					const editedItem = { ...itemExist };
+					editedItem.qty -= 1;
 
-				return {
-					...state,
-					cartItems: state.cartItems.map((item) =>
-						item === itemExist ? editedItem : item
-					)
-				};
+					return {
+						...state,
+						cartItems: state.cartItems.map((item) =>
+							item === itemExist ? editedItem : item
+						)
+					};
+				}
 			}
-		}
+			break;
 		case CART_SAVE_SHIPPING_ADDRESS:
 			return {
 				...state,

@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Table, Button, Row, Col } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
 import { getAllOrders, getOrderDetails } from "../redux/order/orederActions";
@@ -11,7 +10,7 @@ const OrdersListPage = ({ history }) => {
 	const { orders, loading, error } = useSelector((state) => state.order);
 	useEffect(() => {
 		dispatch(getAllOrders());
-	}, [dispatch, getAllOrders]);
+	}, [dispatch]);
 
 	const viewDetails = (id) => {
 		dispatch(getOrderDetails(id));

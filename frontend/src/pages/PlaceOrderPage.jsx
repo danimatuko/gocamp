@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Image, ListGroup, Row, Col, Button } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import CheckoutSteps from "../components/CheckoutSteps";
 import Message from "../components/Message";
-import { createOrder, getOrderDetails, resetOrderDetails } from "../redux/order/orederActions";
+import { createOrder, resetOrderDetails } from "../redux/order/orederActions";
 
 const PlaceOrderPage = ({ history }) => {
 	const cart = useSelector((state) => state.cart);
@@ -26,13 +26,13 @@ const PlaceOrderPage = ({ history }) => {
 		Number(cart.itemsPrice) + Number(cart.shippingPrice) + Number(cart.taxPrice)
 	).toFixed(2);
 
-	const { orderDetails, error, loading } = useSelector((state) => state.order);
+	const { orderDetails, error } = useSelector((state) => state.order);
 
 	useEffect(() => {
 		orderDetails._id && !orderDetails.isPaid
 			? history.push(`/order/${orderDetails._id}`)
 			: dispatch(resetOrderDetails());
-	}, [history, orderDetails._id]);
+	}, [dispatch, history, orderDetails._id, orderDetails.isPaid]);
 
 	const placeOrderHandler = () => {
 		dispatch(

@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Col, Row, Table, Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
 import { getMyOrders, getOrderDetails } from "../redux/order/orederActions";
@@ -13,7 +12,7 @@ const ProfilePage = ({ history }) => {
 
 	useEffect(() => {
 		dispatch(getMyOrders());
-	}, []);
+	}, [dispatch]);
 
 	const viewDetails = (id) => {
 		dispatch(getOrderDetails(id));

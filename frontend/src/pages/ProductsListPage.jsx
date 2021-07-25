@@ -13,7 +13,6 @@ const ProductsListPage = ({ history, location }) => {
 	/* PRODUCTS LIST REDUCER */
 	const { loading, error, products, totalPages } = useSelector((state) => state.productList);
 	const { newProduct } = useSelector((state) => state.productUpdate);
-	const { product: createdProduct } = useSelector((state) => state.productCreate);
 	/* PRODUCT DELETE  REDUCER*/
 	const {
 		loading: loadingDelete,

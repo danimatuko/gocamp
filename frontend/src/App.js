@@ -20,7 +20,6 @@ import EditUserPage from "./pages/EditUser";
 import ProductsListPage from "./pages/ProductsListPage";
 import ProductEditPage from "./pages/ProductEditPage";
 import OrdersListPage from "./pages/OrdersListPage";
-import productSearchReducer from "./redux/product/productSearchReducer";
 import ProductSearchResults from "./pages/ProductsSearchResults";
 
 const App = () => {
@@ -38,7 +37,7 @@ const App = () => {
 								path="/products/search=:keyword"
 								component={ProductSearchResults}
 							/>
-							<Route path="/profile" exact component={ProfilePage} />
+							<ProtectedRoute path="/profile" exact component={ProfilePage} />
 							<Route path="/product/:id" exact component={ProductPage} />
 							<Route path={`/cart/:id?`} component={CartPage} />
 							<Route path={`/login`} component={LoginPage} />

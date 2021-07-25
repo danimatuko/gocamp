@@ -25,7 +25,6 @@ const ProductPage = ({ match, history }) => {
 	const { product, loading, error } = productDetails;
 	const {
 		review,
-		loading: loadingReview,
 		error: reviewError
 	} = useSelector((state) => state.productReview);
 

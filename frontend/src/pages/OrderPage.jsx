@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Image, ListGroup, Row, Col, Button } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
 import { deliverOrder, getOrderDetails, payOrder } from "../redux/order/orederActions";
@@ -13,7 +13,6 @@ const OrderPage = ({ match }) => {
 
 	const userInfo = useSelector((state) => state.user.userInfo);
 	const order = useSelector((state) => state.order);
-	const cart = useSelector((state) => state.cart);
 
 	const { orderDetails, error, loading } = order;
 	const { user, orderItems, shippingAddress } = orderDetails;
@@ -22,7 +21,7 @@ const OrderPage = ({ match }) => {
 		if ((!order || orderDetails._id !== orderId, !user, !orderItems)) {
 			dispatch(getOrderDetails(orderId));
 		}
-	}, [orderDetails, orderId, orderDetails.isDelivered, user, orderItems]);
+	}, [dispatch, orderDetails, orderId, orderDetails.isDelivered, user, orderItems, order]);
 
 	const successPaymentHandler = (paymentResult) => {
 		dispatch(payOrder(orderId, paymentResult));
