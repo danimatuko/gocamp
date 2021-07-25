@@ -20,6 +20,7 @@ const SearchBox = () => {
 	return (
 		<Form onSubmit={submitHandler} className="d-flex">
 			<Form.Control
+				size="sm"
 				value={keyword}
 				type="text"
 				name="search"

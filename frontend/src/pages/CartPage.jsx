@@ -13,6 +13,8 @@ const CartPage = ({ history }) => {
 		history.push("/login?redirect=shipping");
 	};
 
+	const isDesktop = window.innerWidth <= 768;
+
 	return (
 		<Row>
 			<Col md={8}>
@@ -51,13 +53,19 @@ const CartPage = ({ history }) => {
 										</Button>
 									</Row>
 								</Col>
-								<Col md={2}>
+								<Col sm={12} md={2}>
 									<Button
+										size="sm"
+										className="d-block mx-auto"
 										type="button"
-										variant="light"
+										variant={isDesktop ? "outline-dark" : "light"}
 										onClick={() => dispatch(removeItem(item._id))}
 									>
-										<i className="fas fa-trash"></i>
+										{isDesktop ? (
+											<span>Remove</span>
+										) : (
+											<i className="fas fa-trash"></i>
+										)}
 									</Button>
 								</Col>
 								<Col md={2}></Col>

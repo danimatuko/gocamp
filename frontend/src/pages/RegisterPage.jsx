@@ -37,7 +37,7 @@ const RegisterPage = ({ history, location }) => {
 
 	return (
 		<FormContainer>
-			<h1>Sign In</h1>
+			<h1>Sign Up</h1>
 			{error && <Message variant="danger" text={error} />}
 			{message && <Message variant="danger" text={message} />}
 			{loading && <Loader />}

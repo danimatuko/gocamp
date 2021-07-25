@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const CheckoutSteps = ({ step1, step2, step3, step4 }) => {
 	return (
-		<Nav className="justify-conetent-between mb-4">
+		<Nav className="justify-conetent-between mb-4 flex-nowrap checkout-steps">
 			<Nav.Item>
 				{step1 ? (
 					<NavLink as={Link} to="/login">

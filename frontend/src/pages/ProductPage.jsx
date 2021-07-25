@@ -78,7 +78,11 @@ const ProductPage = ({ match, history }) => {
 								<ListGroupItem>
 									<h1 className="h3">{product.name}</h1>
 								</ListGroupItem>
-								<Rating value={product.rating} />
+								<div className="d-flex px-2">
+									<Rating value={product.rating} />
+									{<span className="ms-1">{product.reviews.length} reviews</span>}
+								</div>
+
 								<ListGroupItem>Description: {product.description}</ListGroupItem>
 							</ListGroup>
 						</Col>
