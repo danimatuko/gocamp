@@ -88,7 +88,7 @@ npm run data:destroy
 ```
 
 ### Postman file for testing
-Open postman and import the file from server/goCamp.postman_collection.json 
+Open postman and import the file from backend/goCamp.postman_collection.json 
 
 
 
