@@ -1,0 +1,507 @@
+{
+	"info": {
+		"_postman_id": "9350ec87-c692-47a7-b11d-61a5bdb668c2",
+		"name": "goCamp",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "product",
+			"item": [
+				{
+					"name": "get all products",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/products?page=2",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"products"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get product by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/products/60c50913150ff8ee10d1e370",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"products",
+								"60c50913150ff8ee10d1e370"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete product",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwYzUwOTEzMTUwZmY4ZWUxMGQxZTM2ZCIsImlzQWRtaW4iOnRydWUsImlhdCI6MTYyNTA5NTE5MywiZXhwIjoxNjI1MDk4NzkzfQ.NbFzZbdw33YHSBqqkWMflTxAjGl1viBWwgUxc16DBn8",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{URL}}/api/products/60c50913150ff8ee10d1e370",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"products",
+								"60c50913150ff8ee10d1e370"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add new sample product",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{ADMIN_TOKEN}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{URL}}/api/products",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update product",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{ADMIN_TOKEN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"rating\": 0,\n    \"numReviews\": \"10\",\n    \"price\": 0,\n    \"countInStock\": \"100\",\n    \"name\": \"test name\",\n    \"user\": \"60dd09144aafd6de099902ec\",\n    \"image\": \"/images.sample.jpg\",\n    \"brand\": \"Sample Brand\",\n    \"category\": \"Sample Category\",\n    \"description\": \"Sample Decsription\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/products/60dd6555b61a54124633232e",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"products",
+								"60dd6555b61a54124633232e"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add review",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "search product",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/products/search=iphone",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"products",
+								"search=iphone"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"TOKEN\",pm.response.json().token)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{TOKEN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\":\"admin@example.com\",\n    \"password\":\"123456\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/users/login",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get logged-in user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{TOKEN}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{URL}}/api/users/profile",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"first_name\": \"\",\n    \"last_name\": \"Ronaldo\",\n    \"email\": \"vcvx@example.com\",\n    \"password\": \"123456\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/users",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all users",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{ADMIN_TOKEN}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{URL}}/api/users",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get user by id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{TOKEN}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{URL}}/api/users/60c50913150ff8ee10d1e36d",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"60c50913150ff8ee10d1e36d"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "order",
+			"item": [
+				{
+					"name": "get order details",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwZGQwOTE0NGFhZmQ2ZGUwOTk5MDJlYyIsImlzQWRtaW4iOnRydWUsImlhdCI6MTYyNTQ2ODE3OCwiZXhwIjoxNjI1NDcxNzc4fQ.cNvU7nO2jDepWLl9ZsX6cOoKx3cDdl4bDzBBNU3ZPKA",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{URL}}/api/orders/60e0749ac79fa32ec2c6fd1b",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"orders",
+								"60e0749ac79fa32ec2c6fd1b"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get user orders",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwZGQwOTE0NGFhZmQ2ZGUwOTk5MDJlYyIsImlzQWRtaW4iOnRydWUsImlhdCI6MTYyNTMyMzcwMCwiZXhwIjoxNjI1MzI3MzAwfQ.t3UcdV4uwkgWvYHwNl-rKwtCFEtZpyZgQm_IKBQpv7E",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{URL}}/api/orders/myorders",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"orders",
+								"myorders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all orders",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwZGQwOTE0NGFhZmQ2ZGUwOTk5MDJlYyIsImlzQWRtaW4iOnRydWUsImlhdCI6MTYyNTQ2ODE3OCwiZXhwIjoxNjI1NDcxNzc4fQ.cNvU7nO2jDepWLl9ZsX6cOoKx3cDdl4bDzBBNU3ZPKA",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{URL}}/api/orders",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"orders"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "admin",
+			"item": [
+				{
+					"name": "delete user",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{ADMIN_TOKEN}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{URL}}/api/users/60cccd456b2f30bd985689f2",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"60cccd456b2f30bd985689f2"
+							],
+							"query": [
+								{
+									"key": "ad",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "a",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "edit user",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "{{ADMIN_TOKEN}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"first_name\": \"Kevin\",\n    \"last_name\": \"Durant\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/users/60c916bf0fa780d68c6593c9/edit",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"60c916bf0fa780d68c6593c9",
+								"edit"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get user profile",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/users/profile",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
