@@ -1,11 +1,11 @@
 # gocamp
 
-#### eCommerce platform for camping products, built with the MERN stack & Redux.
+> eCommerce platform for camping products, built with the MERN stack & Redux.
 
 Live demo:
 https://app-gocamp.herokuapp.com/ 
 
-<img src="frontend/public/images/mockup.jpg" width="700px"/>
+<img src="frontend/public/images/mockup.jpg" width="100%"/>
 
 ## Features
 
@@ -24,7 +24,7 @@ https://app-gocamp.herokuapp.com/
 - Database seeder (products & users)
 
  ## Sample Users To Login
-email | password
+email |password
 ------------ | -------------
 admin@example.com | 123456
 john@example.com | 123456
@@ -53,9 +53,11 @@ PAYPAL_CLIENT_ID = your paypal client id
 ### Install Dependencies (frontend & backend)
 
 ```sh
+
 npm install
 cd frontend
 npm install
+
 ```
 
 ### Run (npm scripts)
@@ -71,9 +73,22 @@ npm run server
 npm run client
 
 ```
+### Seed Database
+
+You can use the following commands to seed the database with some sample users and products as well as destroy all data
+
+```sh
+
+# Import data
+npm run data:import
+
+# Destroy data
+npm run data:destroy
+
+```
 
 ### Postman file for testing
-Open postman and import the file from server/gocamp.postman_collection.json 
+Open postman and import the file from server/goCamp.postman_collection.json 
 
 
 
